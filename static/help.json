@@ -1,0 +1,24 @@
+{
+    "sections": [
+        {
+            "title": "Getting Started",
+            "content": "GenAS helps you create and manage DoD Acquisition Strategy documents. Start by selecting a section from the document panel and use the AI Assistant to help generate content."
+        },
+        {
+            "title": "Document Sections",
+            "content": "The main editor contains all required sections of your Acquisition Strategy. Click on any section to expand it and edit its content."
+        },
+        {
+            "title": "AI Assistant",
+            "content": "Use the AI Assistant to help generate content for your document. Select a prompt template and customize it, or ask any questions about acquisition strategy development."
+        },
+        {
+            "title": "Document Management",
+            "content": "Use the buttons at the top of the document panel to:\n- Save versions of your document\n- Load previous versions\n- Print your document"
+        },
+        {
+            "title": "Supporting Documents",
+            "content": "Upload and manage supporting documents like CDDs and ICDs in the upload panel. These documents will be used by the AI Assistant to generate relevant content."
+        }
+    ]
+}

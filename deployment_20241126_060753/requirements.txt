@@ -1,0 +1,10 @@
+flask==2.3.3
+python-dotenv==1.0.0
+langchain==0.0.300
+anthropic==0.19.1
+python-multipart==0.0.6
+PyPDF2==3.0.1
+chardet==5.2.0
+tenacity==8.2.3
+python-docx==0.8.11
+flask-cors==4.0.0
