@@ -5,13 +5,15 @@ mkdir -p /var/app/current/static/css \
          /var/app/current/static/js \
          /var/app/current/uploads \
          /var/app/current/versions \
-         /tmp/genas_sessions
+         /tmp/genas_sessions \
+         /var/log/gunicorn
 
 # Set proper permissions for application directories
 chown -R webapp:webapp /var/app/current/static \
                       /var/app/current/uploads \
                       /var/app/current/versions \
-                      /tmp/genas_sessions
+                      /tmp/genas_sessions \
+                      /var/log/gunicorn
 
 # Set directory permissions
 chmod 755 /var/app/current/static \
@@ -19,7 +21,7 @@ chmod 755 /var/app/current/static \
          /var/app/current/static/js \
          /var/app/current/uploads \
          /var/app/current/versions \
-         /tmp/genas_sessions
+         /var/log/gunicorn
 
 # Create default static files if they don't exist
 if [ ! -f /var/app/current/static/css/style.css ]; then
@@ -45,5 +47,13 @@ echo "Directory structure:"
 ls -la /var/app/current/static/css
 ls -la /var/app/current/static/js
 
-# Test Nginx configuration before reload
-nginx -t && service nginx reload
+# Ensure nginx configuration is valid
+nginx -t
+
+# Reload nginx if configuration is valid
+if [ $? -eq 0 ]; then
+    systemctl reload nginx || systemctl restart nginx
+else
+    echo "Nginx configuration test failed"
+    exit 1
+fi
