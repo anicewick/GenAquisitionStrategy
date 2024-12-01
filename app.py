@@ -24,10 +24,33 @@ import hashlib
 import boto3
 from botocore.exceptions import ClientError
 import logging
+import sys
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+LOG_DIR = '/var/log/flask'
+if not os.path.exists(LOG_DIR):
+    try:
+        os.makedirs(LOG_DIR, mode=0o755)
+    except Exception as e:
+        # Fall back to temp directory if we can't write to /var/log/flask
+        LOG_DIR = os.path.join(tempfile.gettempdir(), 'flask_logs')
+        if not os.path.exists(LOG_DIR):
+            os.makedirs(LOG_DIR, mode=0o755)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler(os.path.join(LOG_DIR, 'application.log')),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
 logger = logging.getLogger(__name__)
+
+# Log startup information
+logger.info("Starting application...")
+logger.info(f"Environment: {os.getenv('FLASK_ENV', 'development')}")
+logger.info(f"Python version: {sys.version}")
 
 # Load environment variables
 load_dotenv()
@@ -919,6 +942,10 @@ def get_document_content(content_hash, filename):
     except Exception as e:
         logger.error(f"Error retrieving document from S3: {str(e)}")
         raise
+
+@app.route('/health')
+def health_check():
+    return jsonify({"status": "healthy"}), 200
 
 if __name__ == '__main__':
     # Only use debug mode when running locally

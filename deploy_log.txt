@@ -1,0 +1,9 @@
+[2024-11-30 06:38:10] Creating installation directory: C:\GenAS
+[2024-11-30 06:38:10] Extracting deployment package: deployment_20241126_061515.zip
+[2024-11-30 06:38:11] Creating virtual environment
+[2024-11-30 06:39:17] Creating installation directory: deployment_20241130_063840.zip
+[2024-11-30 06:39:17] Extracting deployment package: deployment_20241130_063840.zip
+[2024-11-30 06:39:18] Error during deployment: An item with the specified name C:\Users\anice\Windsurf\GenAS\deployment_20241130_063840.zip already exists.
+[2024-11-30 06:39:27] Creating installation directory: C:\GenAS
+[2024-11-30 06:39:27] Extracting deployment package: deployment_20241130_063840.zip
+[2024-11-30 06:39:27] Creating virtual environment
