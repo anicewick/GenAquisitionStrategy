@@ -6,7 +6,7 @@ branch-defaults:
     environment: genas-env
     group_suffix: null
   master:
-    environment: genas-prod
+    environment: genas-241101a
 environment-defaults:
   genas-env:
     branch: null
