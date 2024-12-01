@@ -23,6 +23,11 @@ import tempfile
 import hashlib
 import boto3
 from botocore.exceptions import ClientError
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Load environment variables
 load_dotenv()
@@ -265,19 +270,24 @@ def get_claude_response(system_prompt, user_prompt):
         raise e
 
 # S3 Configuration
-S3_BUCKET = os.getenv('S3_BUCKET_NAME', 'your-bucket-name')
-s3_client = boto3.client('s3',
-    aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
-    aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
-    region_name=os.getenv('AWS_REGION', 'us-east-1')
-)
+S3_BUCKET = os.getenv('S3_BUCKET_NAME', 'genas-storage-241130')
+logger.info(f"Initializing with S3 bucket: {S3_BUCKET}")
+
+try:
+    s3_client = boto3.client('s3')
+    # Test S3 connection
+    s3_client.list_objects_v2(Bucket=S3_BUCKET, MaxKeys=1)
+    logger.info("Successfully connected to S3")
+except Exception as e:
+    logger.error(f"Error connecting to S3: {str(e)}")
 
 def store_document_content(content, filename):
     """Store document content in S3 and return a reference"""
     try:
-        # Create a unique key for the document
         content_hash = hashlib.md5(content.encode('utf-8')).hexdigest()
         s3_key = f'documents/{content_hash}'
+        
+        logger.info(f"Storing document {filename} with key {s3_key}")
         
         # Upload to S3
         s3_client.put_object(
@@ -287,25 +297,31 @@ def store_document_content(content, filename):
             ContentType='text/plain'
         )
         
+        logger.info(f"Successfully stored document {filename}")
         return content_hash
     except Exception as e:
-        print(f"Error storing document in S3: {str(e)}")
+        logger.error(f"Error storing document in S3: {str(e)}")
         raise
 
 def get_document_content(content_hash):
     """Retrieve document content from S3"""
     try:
         s3_key = f'documents/{content_hash}'
+        logger.info(f"Retrieving document with key {s3_key}")
+        
         response = s3_client.get_object(Bucket=S3_BUCKET, Key=s3_key)
         content = response['Body'].read().decode('utf-8')
+        
+        logger.info(f"Successfully retrieved document {s3_key}")
         return content
     except ClientError as e:
         if e.response['Error']['Code'] == 'NoSuchKey':
-            print(f"Document not found in S3: {content_hash}")
+            logger.error(f"Document not found in S3: {content_hash}")
             return None
+        logger.error(f"AWS error retrieving document: {str(e)}")
         raise
     except Exception as e:
-        print(f"Error retrieving document from S3: {str(e)}")
+        logger.error(f"Error retrieving document from S3: {str(e)}")
         return None
 
 @app.route('/')
@@ -323,10 +339,14 @@ def upload_file():
         
     if file:
         try:
+            logger.info(f"Processing upload for file: {file.filename}")
+            
             # Check file size before processing
             file.seek(0, os.SEEK_END)
             size = file.tell()
             file.seek(0)
+            
+            logger.info(f"File size: {size / 1024:.1f}KB")
             
             if size > app.config['MAX_CONTENT_LENGTH']:
                 return jsonify({
@@ -336,11 +356,15 @@ def upload_file():
             filename = secure_filename(file.filename)
             
             # Extract text content
+            logger.info("Extracting text content")
             content = extract_text_from_file(file)
+            
             if content is None:
+                logger.error("Failed to extract text from file")
                 return jsonify({'error': 'Could not extract text from file'}), 400
             
             # Store content in S3
+            logger.info("Storing content in S3")
             content_hash = store_document_content(content, filename)
             
             # Store only the reference in session
@@ -350,13 +374,15 @@ def upload_file():
             session['document_refs'][filename] = content_hash
             session.modified = True
             
+            logger.info(f"Successfully processed file {filename}")
+            
             return jsonify({
                 'message': 'File uploaded and processed successfully',
                 'filename': filename
             })
             
         except Exception as e:
-            print(f"Upload error: {str(e)}")
+            logger.error(f"Upload error: {str(e)}")
             return jsonify({'error': f'Error processing file: {str(e)}'}), 500
             
     return jsonify({'error': 'Invalid file'}), 400
