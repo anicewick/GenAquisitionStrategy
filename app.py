@@ -32,41 +32,39 @@ logger = logging.getLogger(__name__)
 # Load environment variables
 load_dotenv()
 
+# Create session directory if it doesn't exist
+SESSION_DIR = os.path.join(tempfile.gettempdir(), 'genas_sessions')
+if not os.path.exists(SESSION_DIR):
+    os.makedirs(SESSION_DIR, mode=0o777)
+
 # Initialize Flask app
 app = Flask(__name__)
-app.secret_key = os.getenv('FLASK_SECRET_KEY', 'default-secret-key')  # Set a secret key for session management
-CORS(app)  # Enable CORS for all routes
-
-# Increase maximum content length to 20MB
-app.config['MAX_CONTENT_LENGTH'] = 20 * 1024 * 1024  # 20MB in bytes
-app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_FILE_DIR'] = tempfile.gettempdir()
-app.config['SESSION_FILE_THRESHOLD'] = 100  # Number of files before cleanup
-Session(app)
-
-# Ensure session directory exists
-os.makedirs(app.config['SESSION_FILE_DIR'], exist_ok=True)
+app.config.update(
+    SECRET_KEY=os.getenv('SECRET_KEY', 'your-secret-key-here'),
+    MAX_CONTENT_LENGTH=16 * 1024 * 1024,  # 16MB max file size
+    SESSION_TYPE='filesystem',
+    SESSION_FILE_DIR=SESSION_DIR,
+    SESSION_FILE_THRESHOLD=100,
+    PERMANENT_SESSION_LIFETIME=timedelta(days=1)
+)
 
 # Initialize session interface
 Session(app)
 
-# Default prompt for AI interactions
-DEFAULT_PROMPT = """You are an AI assistant specialized in DoD Acquisition Strategy documents. Your role is to:
-1. Analyze the provided documents thoroughly
-2. Answer questions based on the document content first, then supplement with your knowledge
-3. Always cite which document you're referencing in your response
-4. If relevant, suggest appropriate sections for including the information in an Acquisition Strategy
+# S3 Configuration
+S3_BUCKET = os.getenv('S3_BUCKET_NAME', 'genas-storage-241130')
+logger.info(f"Initializing with S3 bucket: {S3_BUCKET}")
 
-Please provide clear, concise responses that help create or improve DoD Acquisition Strategy documents."""
+try:
+    s3_client = boto3.client('s3')
+    # Test S3 connection
+    s3_client.list_objects_v2(Bucket=S3_BUCKET, MaxKeys=1)
+    logger.info("Successfully connected to S3")
+except Exception as e:
+    logger.error(f"Error connecting to S3: {str(e)}")
 
-# System prompt for all interactions
-SYSTEM_PROMPT = """You are an AI assistant specialized in DoD Acquisition Strategy documents. Your role is to:
-1. Analyze the provided documents thoroughly
-2. Answer questions based on the document content first, then supplement with your knowledge
-3. Always cite which document you're referencing in your response
-4. If relevant, suggest appropriate sections for including the information in an Acquisition Strategy"""
-
+# Ensure required directories exist
+app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
 app.config['VERSIONS_FOLDER'] = 'versions'
 app.config['DOCUMENTS_STORE'] = 'documents_store.pkl'
 
@@ -269,60 +267,23 @@ def get_claude_response(system_prompt, user_prompt):
         print(f"Error type: {type(e)}")
         raise e
 
-# S3 Configuration
-S3_BUCKET = os.getenv('S3_BUCKET_NAME', 'genas-storage-241130')
-logger.info(f"Initializing with S3 bucket: {S3_BUCKET}")
+CORS(app)  # Enable CORS for all routes
 
-try:
-    s3_client = boto3.client('s3')
-    # Test S3 connection
-    s3_client.list_objects_v2(Bucket=S3_BUCKET, MaxKeys=1)
-    logger.info("Successfully connected to S3")
-except Exception as e:
-    logger.error(f"Error connecting to S3: {str(e)}")
+# Default prompt for AI interactions
+DEFAULT_PROMPT = """You are an AI assistant specialized in DoD Acquisition Strategy documents. Your role is to:
+1. Analyze the provided documents thoroughly
+2. Answer questions based on the document content first, then supplement with your knowledge
+3. Always cite which document you're referencing in your response
+4. If relevant, suggest appropriate sections for including the information in an Acquisition Strategy
 
-def store_document_content(content, filename):
-    """Store document content in S3 and return a reference"""
-    try:
-        content_hash = hashlib.md5(content.encode('utf-8')).hexdigest()
-        s3_key = f'documents/{content_hash}'
-        
-        logger.info(f"Storing document {filename} with key {s3_key}")
-        
-        # Upload to S3
-        s3_client.put_object(
-            Bucket=S3_BUCKET,
-            Key=s3_key,
-            Body=content.encode('utf-8'),
-            ContentType='text/plain'
-        )
-        
-        logger.info(f"Successfully stored document {filename}")
-        return content_hash
-    except Exception as e:
-        logger.error(f"Error storing document in S3: {str(e)}")
-        raise
+Please provide clear, concise responses that help create or improve DoD Acquisition Strategy documents."""
 
-def get_document_content(content_hash):
-    """Retrieve document content from S3"""
-    try:
-        s3_key = f'documents/{content_hash}'
-        logger.info(f"Retrieving document with key {s3_key}")
-        
-        response = s3_client.get_object(Bucket=S3_BUCKET, Key=s3_key)
-        content = response['Body'].read().decode('utf-8')
-        
-        logger.info(f"Successfully retrieved document {s3_key}")
-        return content
-    except ClientError as e:
-        if e.response['Error']['Code'] == 'NoSuchKey':
-            logger.error(f"Document not found in S3: {content_hash}")
-            return None
-        logger.error(f"AWS error retrieving document: {str(e)}")
-        raise
-    except Exception as e:
-        logger.error(f"Error retrieving document from S3: {str(e)}")
-        return None
+# System prompt for all interactions
+SYSTEM_PROMPT = """You are an AI assistant specialized in DoD Acquisition Strategy documents. Your role is to:
+1. Analyze the provided documents thoroughly
+2. Answer questions based on the document content first, then supplement with your knowledge
+3. Always cite which document you're referencing in your response
+4. If relevant, suggest appropriate sections for including the information in an Acquisition Strategy"""
 
 @app.route('/')
 def index():
@@ -591,7 +552,7 @@ def chat():
         failed_docs = []
         
         for filename, content_hash in session['document_refs'].items():
-            content = get_document_content(content_hash)
+            content = get_document_content(content_hash, filename)
             if content:
                 documents_context.append(f"Document: {filename}\nContent: {content}")
             else:
@@ -922,6 +883,42 @@ def get_prompt(prompt_id):
                 'prompt': DEFAULT_PROMPT
             })
         return jsonify({'error': str(e)}), 500
+
+def store_document_content(content, filename):
+    """Store document content in S3 and return content hash."""
+    try:
+        # Generate a unique hash for the content
+        content_hash = hashlib.md5(content.encode()).hexdigest()
+        
+        # Store the content in S3
+        s3_key = f'documents/{content_hash}/{filename}'
+        s3_client.put_object(
+            Bucket=S3_BUCKET,
+            Key=s3_key,
+            Body=content.encode(),
+            ContentType='text/plain'
+        )
+        logger.info(f"Stored document in S3: {s3_key}")
+        return content_hash
+    except Exception as e:
+        logger.error(f"Error storing document in S3: {str(e)}")
+        raise
+
+def get_document_content(content_hash, filename):
+    """Retrieve document content from S3."""
+    try:
+        s3_key = f'documents/{content_hash}/{filename}'
+        response = s3_client.get_object(Bucket=S3_BUCKET, Key=s3_key)
+        content = response['Body'].read().decode()
+        return content
+    except ClientError as e:
+        if e.response['Error']['Code'] == 'NoSuchKey':
+            logger.error(f"Document not found in S3: {s3_key}")
+            return None
+        raise
+    except Exception as e:
+        logger.error(f"Error retrieving document from S3: {str(e)}")
+        raise
 
 if __name__ == '__main__':
     # Only use debug mode when running locally
