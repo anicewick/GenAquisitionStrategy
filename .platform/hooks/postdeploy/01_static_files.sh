@@ -22,12 +22,18 @@ chmod 755 /var/app/current/static \
 chmod 777 /tmp/genas_sessions
 
 # Copy static files to their proper locations
-cp -f /var/app/current/static_src/css/* /var/app/current/static/css/ || true
-cp -f /var/app/current/static_src/js/* /var/app/current/static/js/ || true
+cp -rf /var/app/current/static_src/css/* /var/app/current/static/css/ 2>/dev/null || true
+cp -rf /var/app/current/static_src/js/* /var/app/current/static/js/ 2>/dev/null || true
 
 # Ensure static files are accessible
 find /var/app/current/static -type f -exec chmod 644 {} \;
 find /var/app/current/static -type d -exec chmod 755 {} \;
+
+# Verify Python version and pip
+echo "Python version:"
+python3 --version
+echo "Pip version:"
+pip --version
 
 # Log the status of key directories
 echo "Directory permissions:"
@@ -40,3 +46,6 @@ ls -la /tmp/genas_sessions
 
 # Ensure Nginx can access the directories
 chmod 755 /var/app/current
+
+# Restart Nginx to apply changes
+service nginx restart

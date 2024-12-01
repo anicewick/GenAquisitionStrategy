@@ -1,0 +1,347 @@
+Dec  1 11:03:12 ip-172-31-86-102 web[114786]: [2024-12-01 11:03:12 +0000] [114786] [INFO] Handling signal: term
+Dec  1 11:03:12 ip-172-31-86-102 web[114820]: [2024-12-01 11:03:12 +0000] [114820] [INFO] Worker exiting (pid: 114820)
+Dec  1 11:03:12 ip-172-31-86-102 web[114820]: No existing document store found, starting fresh
+Dec  1 11:03:12 ip-172-31-86-102 web[114816]: [2024-12-01 11:03:12 +0000] [114816] [INFO] Worker exiting (pid: 114816)
+Dec  1 11:03:12 ip-172-31-86-102 web[114816]: No existing document store found, starting fresh
+Dec  1 11:03:13 ip-172-31-86-102 web[114814]: [2024-12-01 11:03:13 +0000] [114814] [INFO] Worker exiting (pid: 114814)
+Dec  1 11:03:13 ip-172-31-86-102 web[114814]: No existing document store found, starting fresh
+Dec  1 11:03:13 ip-172-31-86-102 web[114786]: [2024-12-01 11:03:13 +0000] [114786] [INFO] Shutting down: Master
+Dec  1 11:03:16 ip-172-31-86-102 web[115492]: [2024-12-01 11:03:16 +0000] [115492] [INFO] Starting gunicorn 21.2.0
+Dec  1 11:03:16 ip-172-31-86-102 web[115492]: [2024-12-01 11:03:16 +0000] [115492] [INFO] Listening at: http://0.0.0.0:8000 (115492)
+Dec  1 11:03:16 ip-172-31-86-102 web[115492]: [2024-12-01 11:03:16 +0000] [115492] [INFO] Using worker: gthread
+Dec  1 11:03:16 ip-172-31-86-102 web[115501]: [2024-12-01 11:03:16 +0000] [115501] [INFO] Booting worker with pid: 115501
+Dec  1 11:03:16 ip-172-31-86-102 web[115502]: [2024-12-01 11:03:16 +0000] [115502] [INFO] Booting worker with pid: 115502
+Dec  1 11:03:16 ip-172-31-86-102 web[115503]: [2024-12-01 11:03:16 +0000] [115503] [INFO] Booting worker with pid: 115503
+Dec  1 11:03:17 ip-172-31-86-102 web[115501]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 11:03:17 ip-172-31-86-102 web[115501]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 11:03:17 ip-172-31-86-102 web[115501]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 11:03:17 ip-172-31-86-102 web[115502]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 11:03:17 ip-172-31-86-102 web[115502]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 11:03:17 ip-172-31-86-102 web[115503]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 11:03:17 ip-172-31-86-102 web[115503]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 11:03:17 ip-172-31-86-102 web[115502]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 11:03:17 ip-172-31-86-102 web[115503]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 11:03:18 ip-172-31-86-102 web[115501]: ERROR:app:Error connecting to S3: An error occurred (AccessDenied) when calling the ListObjectsV2 operation: User: arn:aws:sts::677045937080:assumed-role/aws-elasticbeanstalk-ec2-role/i-0a6923d06430c5604 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::genas-storage-241130" because no identity-based policy allows the s3:ListBucket action
+Dec  1 11:03:18 ip-172-31-86-102 web[115502]: ERROR:app:Error connecting to S3: An error occurred (AccessDenied) when calling the ListObjectsV2 operation: User: arn:aws:sts::677045937080:assumed-role/aws-elasticbeanstalk-ec2-role/i-0a6923d06430c5604 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::genas-storage-241130" because no identity-based policy allows the s3:ListBucket action
+Dec  1 11:03:18 ip-172-31-86-102 web[115503]: ERROR:app:Error connecting to S3: An error occurred (AccessDenied) when calling the ListObjectsV2 operation: User: arn:aws:sts::677045937080:assumed-role/aws-elasticbeanstalk-ec2-role/i-0a6923d06430c5604 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::genas-storage-241130" because no identity-based policy allows the s3:ListBucket action
+Dec  1 11:05:03 ip-172-31-86-102 web[115492]: [2024-12-01 11:05:03 +0000] [115492] [INFO] Handling signal: term
+Dec  1 11:05:04 ip-172-31-86-102 web[115501]: [2024-12-01 11:05:04 +0000] [115501] [INFO] Worker exiting (pid: 115501)
+Dec  1 11:05:04 ip-172-31-86-102 web[115501]: No existing document store found, starting fresh
+Dec  1 11:05:04 ip-172-31-86-102 web[115502]: [2024-12-01 11:05:04 +0000] [115502] [INFO] Worker exiting (pid: 115502)
+Dec  1 11:05:04 ip-172-31-86-102 web[115502]: No existing document store found, starting fresh
+Dec  1 11:05:04 ip-172-31-86-102 web[115503]: [2024-12-01 11:05:04 +0000] [115503] [INFO] Worker exiting (pid: 115503)
+Dec  1 11:05:04 ip-172-31-86-102 web[115503]: No existing document store found, starting fresh
+Dec  1 11:05:05 ip-172-31-86-102 web[115492]: [2024-12-01 11:05:05 +0000] [115492] [INFO] Shutting down: Master
+Dec  1 11:05:06 ip-172-31-86-102 web[115970]: [2024-12-01 11:05:06 +0000] [115970] [INFO] Starting gunicorn 21.2.0
+Dec  1 11:05:06 ip-172-31-86-102 web[115970]: [2024-12-01 11:05:06 +0000] [115970] [INFO] Listening at: http://0.0.0.0:8000 (115970)
+Dec  1 11:05:06 ip-172-31-86-102 web[115970]: [2024-12-01 11:05:06 +0000] [115970] [INFO] Using worker: gthread
+Dec  1 11:05:06 ip-172-31-86-102 web[115977]: [2024-12-01 11:05:06 +0000] [115977] [INFO] Booting worker with pid: 115977
+Dec  1 11:05:06 ip-172-31-86-102 web[115978]: [2024-12-01 11:05:06 +0000] [115978] [INFO] Booting worker with pid: 115978
+Dec  1 11:05:06 ip-172-31-86-102 web[115981]: [2024-12-01 11:05:06 +0000] [115981] [INFO] Booting worker with pid: 115981
+Dec  1 11:05:08 ip-172-31-86-102 web[115981]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 11:05:08 ip-172-31-86-102 web[115977]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 11:05:08 ip-172-31-86-102 web[115981]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 11:05:08 ip-172-31-86-102 web[115977]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 11:05:08 ip-172-31-86-102 web[115978]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 11:05:08 ip-172-31-86-102 web[115978]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 11:05:08 ip-172-31-86-102 web[115981]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 11:05:08 ip-172-31-86-102 web[115977]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 11:05:08 ip-172-31-86-102 web[115978]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 11:05:09 ip-172-31-86-102 web[115981]: ERROR:app:Error connecting to S3: An error occurred (AccessDenied) when calling the ListObjectsV2 operation: User: arn:aws:sts::677045937080:assumed-role/aws-elasticbeanstalk-ec2-role/i-0a6923d06430c5604 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::genas-storage-241130" because no identity-based policy allows the s3:ListBucket action
+Dec  1 11:05:09 ip-172-31-86-102 web[115977]: ERROR:app:Error connecting to S3: An error occurred (AccessDenied) when calling the ListObjectsV2 operation: User: arn:aws:sts::677045937080:assumed-role/aws-elasticbeanstalk-ec2-role/i-0a6923d06430c5604 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::genas-storage-241130" because no identity-based policy allows the s3:ListBucket action
+Dec  1 11:05:09 ip-172-31-86-102 web[115978]: ERROR:app:Error connecting to S3: An error occurred (AccessDenied) when calling the ListObjectsV2 operation: User: arn:aws:sts::677045937080:assumed-role/aws-elasticbeanstalk-ec2-role/i-0a6923d06430c5604 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::genas-storage-241130" because no identity-based policy allows the s3:ListBucket action
+Dec  1 13:55:15 ip-172-31-86-102 web[115970]: [2024-12-01 13:55:15 +0000] [115970] [INFO] Handling signal: term
+Dec  1 13:55:15 ip-172-31-86-102 web[115977]: [2024-12-01 13:55:15 +0000] [115977] [INFO] Worker exiting (pid: 115977)
+Dec  1 13:55:15 ip-172-31-86-102 web[115977]: No existing document store found, starting fresh
+Dec  1 13:55:15 ip-172-31-86-102 web[115978]: [2024-12-01 13:55:15 +0000] [115978] [INFO] Worker exiting (pid: 115978)
+Dec  1 13:55:15 ip-172-31-86-102 web[115978]: No existing document store found, starting fresh
+Dec  1 13:55:15 ip-172-31-86-102 web[115981]: [2024-12-01 13:55:15 +0000] [115981] [INFO] Worker exiting (pid: 115981)
+Dec  1 13:55:15 ip-172-31-86-102 web[115981]: No existing document store found, starting fresh
+Dec  1 13:55:16 ip-172-31-86-102 web[115970]: [2024-12-01 13:55:16 +0000] [115970] [INFO] Shutting down: Master
+Dec  1 13:55:18 ip-172-31-86-102 web[122729]: [2024-12-01 13:55:18 +0000] [122729] [INFO] Starting gunicorn 21.2.0
+Dec  1 13:55:18 ip-172-31-86-102 web[122729]: [2024-12-01 13:55:18 +0000] [122729] [INFO] Listening at: http://0.0.0.0:8000 (122729)
+Dec  1 13:55:18 ip-172-31-86-102 web[122729]: [2024-12-01 13:55:18 +0000] [122729] [INFO] Using worker: gthread
+Dec  1 13:55:18 ip-172-31-86-102 web[122736]: [2024-12-01 13:55:18 +0000] [122736] [INFO] Booting worker with pid: 122736
+Dec  1 13:55:18 ip-172-31-86-102 web[122739]: [2024-12-01 13:55:18 +0000] [122739] [INFO] Booting worker with pid: 122739
+Dec  1 13:55:18 ip-172-31-86-102 web[122740]: [2024-12-01 13:55:18 +0000] [122740] [INFO] Booting worker with pid: 122740
+Dec  1 13:55:20 ip-172-31-86-102 web[122740]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 13:55:20 ip-172-31-86-102 web[122740]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 13:55:20 ip-172-31-86-102 web[122739]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 13:55:20 ip-172-31-86-102 web[122736]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 13:55:20 ip-172-31-86-102 web[122739]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 13:55:20 ip-172-31-86-102 web[122736]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 13:55:20 ip-172-31-86-102 web[122740]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 13:55:20 ip-172-31-86-102 web[122739]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 13:55:20 ip-172-31-86-102 web[122736]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 13:55:20 ip-172-31-86-102 web[122736]: ERROR:app:Error connecting to S3: An error occurred (AccessDenied) when calling the ListObjectsV2 operation: User: arn:aws:sts::677045937080:assumed-role/aws-elasticbeanstalk-ec2-role/i-0a6923d06430c5604 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::genas-storage-241130" because no identity-based policy allows the s3:ListBucket action
+Dec  1 13:55:20 ip-172-31-86-102 web[122740]: ERROR:app:Error connecting to S3: An error occurred (AccessDenied) when calling the ListObjectsV2 operation: User: arn:aws:sts::677045937080:assumed-role/aws-elasticbeanstalk-ec2-role/i-0a6923d06430c5604 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::genas-storage-241130" because no identity-based policy allows the s3:ListBucket action
+Dec  1 13:55:20 ip-172-31-86-102 web[122739]: ERROR:app:Error connecting to S3: An error occurred (AccessDenied) when calling the ListObjectsV2 operation: User: arn:aws:sts::677045937080:assumed-role/aws-elasticbeanstalk-ec2-role/i-0a6923d06430c5604 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::genas-storage-241130" because no identity-based policy allows the s3:ListBucket action
+Dec  1 13:57:22 ip-172-31-86-102 web[122729]: [2024-12-01 13:57:22 +0000] [122729] [INFO] Handling signal: term
+Dec  1 13:57:23 ip-172-31-86-102 web[122736]: [2024-12-01 13:57:23 +0000] [122736] [INFO] Worker exiting (pid: 122736)
+Dec  1 13:57:23 ip-172-31-86-102 web[122736]: No existing document store found, starting fresh
+Dec  1 13:57:23 ip-172-31-86-102 web[122739]: [2024-12-01 13:57:23 +0000] [122739] [INFO] Worker exiting (pid: 122739)
+Dec  1 13:57:23 ip-172-31-86-102 web[122740]: [2024-12-01 13:57:23 +0000] [122740] [INFO] Worker exiting (pid: 122740)
+Dec  1 13:57:23 ip-172-31-86-102 web[122740]: No existing document store found, starting fresh
+Dec  1 13:57:23 ip-172-31-86-102 web[122739]: No existing document store found, starting fresh
+Dec  1 13:57:23 ip-172-31-86-102 web[122729]: [2024-12-01 13:57:23 +0000] [122729] [INFO] Shutting down: Master
+Dec  1 13:57:25 ip-172-31-86-102 web[123185]: [2024-12-01 13:57:25 +0000] [123185] [INFO] Starting gunicorn 21.2.0
+Dec  1 13:57:25 ip-172-31-86-102 web[123185]: [2024-12-01 13:57:25 +0000] [123185] [INFO] Listening at: http://0.0.0.0:8000 (123185)
+Dec  1 13:57:25 ip-172-31-86-102 web[123185]: [2024-12-01 13:57:25 +0000] [123185] [INFO] Using worker: gthread
+Dec  1 13:57:25 ip-172-31-86-102 web[123193]: [2024-12-01 13:57:25 +0000] [123193] [INFO] Booting worker with pid: 123193
+Dec  1 13:57:25 ip-172-31-86-102 web[123194]: [2024-12-01 13:57:25 +0000] [123194] [INFO] Booting worker with pid: 123194
+Dec  1 13:57:25 ip-172-31-86-102 web[123216]: [2024-12-01 13:57:25 +0000] [123216] [INFO] Booting worker with pid: 123216
+Dec  1 13:57:27 ip-172-31-86-102 web[123193]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 13:57:27 ip-172-31-86-102 web[123194]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 13:57:27 ip-172-31-86-102 web[123193]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 13:57:27 ip-172-31-86-102 web[123194]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 13:57:27 ip-172-31-86-102 web[123216]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 13:57:27 ip-172-31-86-102 web[123216]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 13:57:27 ip-172-31-86-102 web[123193]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 13:57:27 ip-172-31-86-102 web[123194]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 13:57:27 ip-172-31-86-102 web[123216]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 13:57:27 ip-172-31-86-102 web[123194]: ERROR:app:Error connecting to S3: An error occurred (AccessDenied) when calling the ListObjectsV2 operation: User: arn:aws:sts::677045937080:assumed-role/aws-elasticbeanstalk-ec2-role/i-0a6923d06430c5604 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::genas-storage-241130" because no identity-based policy allows the s3:ListBucket action
+Dec  1 13:57:27 ip-172-31-86-102 web[123193]: ERROR:app:Error connecting to S3: An error occurred (AccessDenied) when calling the ListObjectsV2 operation: User: arn:aws:sts::677045937080:assumed-role/aws-elasticbeanstalk-ec2-role/i-0a6923d06430c5604 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::genas-storage-241130" because no identity-based policy allows the s3:ListBucket action
+Dec  1 13:57:27 ip-172-31-86-102 web[123216]: ERROR:app:Error connecting to S3: An error occurred (AccessDenied) when calling the ListObjectsV2 operation: User: arn:aws:sts::677045937080:assumed-role/aws-elasticbeanstalk-ec2-role/i-0a6923d06430c5604 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::genas-storage-241130" because no identity-based policy allows the s3:ListBucket action
+Dec  1 14:18:09 ip-172-31-86-102 web[123185]: [2024-12-01 14:18:09 +0000] [123185] [INFO] Handling signal: term
+Dec  1 14:18:09 ip-172-31-86-102 web[123193]: [2024-12-01 14:18:09 +0000] [123193] [INFO] Worker exiting (pid: 123193)
+Dec  1 14:18:09 ip-172-31-86-102 web[123193]: No existing document store found, starting fresh
+Dec  1 14:18:09 ip-172-31-86-102 web[123216]: [2024-12-01 14:18:09 +0000] [123216] [INFO] Worker exiting (pid: 123216)
+Dec  1 14:18:09 ip-172-31-86-102 web[123216]: No existing document store found, starting fresh
+Dec  1 14:18:09 ip-172-31-86-102 web[123194]: [2024-12-01 14:18:09 +0000] [123194] [INFO] Worker exiting (pid: 123194)
+Dec  1 14:18:09 ip-172-31-86-102 web[123194]: No existing document store found, starting fresh
+Dec  1 14:18:10 ip-172-31-86-102 web[123185]: [2024-12-01 14:18:10 +0000] [123185] [INFO] Shutting down: Master
+Dec  1 14:18:12 ip-172-31-86-102 web[124533]: [2024-12-01 14:18:12 +0000] [124533] [INFO] Starting gunicorn 21.2.0
+Dec  1 14:18:12 ip-172-31-86-102 web[124533]: [2024-12-01 14:18:12 +0000] [124533] [INFO] Listening at: http://0.0.0.0:8000 (124533)
+Dec  1 14:18:12 ip-172-31-86-102 web[124533]: [2024-12-01 14:18:12 +0000] [124533] [INFO] Using worker: gthread
+Dec  1 14:18:12 ip-172-31-86-102 web[124541]: [2024-12-01 14:18:12 +0000] [124541] [INFO] Booting worker with pid: 124541
+Dec  1 14:18:12 ip-172-31-86-102 web[124561]: [2024-12-01 14:18:12 +0000] [124561] [INFO] Booting worker with pid: 124561
+Dec  1 14:18:12 ip-172-31-86-102 web[124563]: [2024-12-01 14:18:12 +0000] [124563] [INFO] Booting worker with pid: 124563
+Dec  1 14:18:14 ip-172-31-86-102 web[124541]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:18:14 ip-172-31-86-102 web[124563]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:18:14 ip-172-31-86-102 web[124561]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:18:14 ip-172-31-86-102 web[124563]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:18:14 ip-172-31-86-102 web[124541]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:18:14 ip-172-31-86-102 web[124561]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:18:14 ip-172-31-86-102 web[124541]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:18:14 ip-172-31-86-102 web[124563]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:18:14 ip-172-31-86-102 web[124561]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:18:14 ip-172-31-86-102 web[124561]: INFO:app:Successfully connected to S3
+Dec  1 14:18:14 ip-172-31-86-102 web[124563]: INFO:app:Successfully connected to S3
+Dec  1 14:18:14 ip-172-31-86-102 web[124541]: INFO:app:Successfully connected to S3
+Dec  1 14:19:13 ip-172-31-86-102 web[124533]: [2024-12-01 14:19:13 +0000] [124533] [INFO] Handling signal: term
+Dec  1 14:19:14 ip-172-31-86-102 web[124541]: [2024-12-01 14:19:14 +0000] [124541] [INFO] Worker exiting (pid: 124541)
+Dec  1 14:19:14 ip-172-31-86-102 web[124541]: No existing document store found, starting fresh
+Dec  1 14:19:14 ip-172-31-86-102 web[124563]: [2024-12-01 14:19:14 +0000] [124563] [INFO] Worker exiting (pid: 124563)
+Dec  1 14:19:14 ip-172-31-86-102 web[124563]: No existing document store found, starting fresh
+Dec  1 14:19:14 ip-172-31-86-102 web[124561]: [2024-12-01 14:19:14 +0000] [124561] [INFO] Worker exiting (pid: 124561)
+Dec  1 14:19:14 ip-172-31-86-102 web[124561]: No existing document store found, starting fresh
+Dec  1 14:19:15 ip-172-31-86-102 web[124533]: [2024-12-01 14:19:15 +0000] [124533] [INFO] Shutting down: Master
+Dec  1 14:19:16 ip-172-31-86-102 web[125093]: [2024-12-01 14:19:16 +0000] [125093] [INFO] Starting gunicorn 21.2.0
+Dec  1 14:19:16 ip-172-31-86-102 web[125093]: [2024-12-01 14:19:16 +0000] [125093] [INFO] Listening at: http://0.0.0.0:8000 (125093)
+Dec  1 14:19:16 ip-172-31-86-102 web[125093]: [2024-12-01 14:19:16 +0000] [125093] [INFO] Using worker: gthread
+Dec  1 14:19:16 ip-172-31-86-102 web[125101]: [2024-12-01 14:19:16 +0000] [125101] [INFO] Booting worker with pid: 125101
+Dec  1 14:19:16 ip-172-31-86-102 web[125102]: [2024-12-01 14:19:16 +0000] [125102] [INFO] Booting worker with pid: 125102
+Dec  1 14:19:16 ip-172-31-86-102 web[125103]: [2024-12-01 14:19:16 +0000] [125103] [INFO] Booting worker with pid: 125103
+Dec  1 14:19:19 ip-172-31-86-102 web[125102]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:19:19 ip-172-31-86-102 web[125103]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:19:19 ip-172-31-86-102 web[125101]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:19:19 ip-172-31-86-102 web[125103]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:19:19 ip-172-31-86-102 web[125101]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:19:19 ip-172-31-86-102 web[125102]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:19:19 ip-172-31-86-102 web[125103]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:19:19 ip-172-31-86-102 web[125101]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:19:19 ip-172-31-86-102 web[125102]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:19:19 ip-172-31-86-102 web[125103]: INFO:app:Successfully connected to S3
+Dec  1 14:19:19 ip-172-31-86-102 web[125101]: INFO:app:Successfully connected to S3
+Dec  1 14:19:19 ip-172-31-86-102 web[125102]: INFO:app:Successfully connected to S3
+Dec  1 14:23:36 ip-172-31-86-102 web[125093]: [2024-12-01 14:23:36 +0000] [125093] [INFO] Handling signal: term
+Dec  1 14:23:37 ip-172-31-86-102 web[125103]: [2024-12-01 14:23:37 +0000] [125103] [INFO] Worker exiting (pid: 125103)
+Dec  1 14:23:37 ip-172-31-86-102 web[125103]: No existing document store found, starting fresh
+Dec  1 14:23:37 ip-172-31-86-102 web[125101]: [2024-12-01 14:23:37 +0000] [125101] [INFO] Worker exiting (pid: 125101)
+Dec  1 14:23:37 ip-172-31-86-102 web[125101]: No existing document store found, starting fresh
+Dec  1 14:23:37 ip-172-31-86-102 web[125102]: [2024-12-01 14:23:37 +0000] [125102] [INFO] Worker exiting (pid: 125102)
+Dec  1 14:23:37 ip-172-31-86-102 web[125102]: No existing document store found, starting fresh
+Dec  1 14:23:38 ip-172-31-86-102 web[125093]: [2024-12-01 14:23:38 +0000] [125093] [INFO] Shutting down: Master
+Dec  1 14:23:40 ip-172-31-86-102 web[125813]: [2024-12-01 14:23:40 +0000] [125813] [INFO] Starting gunicorn 21.2.0
+Dec  1 14:23:40 ip-172-31-86-102 web[125813]: [2024-12-01 14:23:40 +0000] [125813] [INFO] Listening at: http://0.0.0.0:8000 (125813)
+Dec  1 14:23:40 ip-172-31-86-102 web[125813]: [2024-12-01 14:23:40 +0000] [125813] [INFO] Using worker: gthread
+Dec  1 14:23:40 ip-172-31-86-102 web[125820]: [2024-12-01 14:23:40 +0000] [125820] [INFO] Booting worker with pid: 125820
+Dec  1 14:23:40 ip-172-31-86-102 web[125823]: [2024-12-01 14:23:40 +0000] [125823] [INFO] Booting worker with pid: 125823
+Dec  1 14:23:40 ip-172-31-86-102 web[125824]: [2024-12-01 14:23:40 +0000] [125824] [INFO] Booting worker with pid: 125824
+Dec  1 14:23:41 ip-172-31-86-102 web[125824]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:23:41 ip-172-31-86-102 web[125820]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:23:41 ip-172-31-86-102 web[125823]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:23:41 ip-172-31-86-102 web[125823]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:23:41 ip-172-31-86-102 web[125824]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:23:41 ip-172-31-86-102 web[125820]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:23:41 ip-172-31-86-102 web[125824]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:23:41 ip-172-31-86-102 web[125823]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:23:41 ip-172-31-86-102 web[125820]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:23:42 ip-172-31-86-102 web[125824]: INFO:app:Successfully connected to S3
+Dec  1 14:23:42 ip-172-31-86-102 web[125823]: INFO:app:Successfully connected to S3
+Dec  1 14:23:42 ip-172-31-86-102 web[125820]: INFO:app:Successfully connected to S3
+Dec  1 14:25:02 ip-172-31-86-102 web[125813]: [2024-12-01 14:25:02 +0000] [125813] [INFO] Handling signal: term
+Dec  1 14:25:02 ip-172-31-86-102 web[125824]: [2024-12-01 14:25:02 +0000] [125824] [INFO] Worker exiting (pid: 125824)
+Dec  1 14:25:02 ip-172-31-86-102 web[125824]: No existing document store found, starting fresh
+Dec  1 14:25:02 ip-172-31-86-102 web[125823]: [2024-12-01 14:25:02 +0000] [125823] [INFO] Worker exiting (pid: 125823)
+Dec  1 14:25:02 ip-172-31-86-102 web[125823]: No existing document store found, starting fresh
+Dec  1 14:25:02 ip-172-31-86-102 web[125820]: [2024-12-01 14:25:02 +0000] [125820] [INFO] Worker exiting (pid: 125820)
+Dec  1 14:25:02 ip-172-31-86-102 web[125820]: No existing document store found, starting fresh
+Dec  1 14:25:03 ip-172-31-86-102 web[125813]: [2024-12-01 14:25:03 +0000] [125813] [INFO] Shutting down: Master
+Dec  1 14:25:05 ip-172-31-86-102 web[126265]: [2024-12-01 14:25:05 +0000] [126265] [INFO] Starting gunicorn 21.2.0
+Dec  1 14:25:05 ip-172-31-86-102 web[126265]: [2024-12-01 14:25:05 +0000] [126265] [INFO] Listening at: http://0.0.0.0:8000 (126265)
+Dec  1 14:25:05 ip-172-31-86-102 web[126265]: [2024-12-01 14:25:05 +0000] [126265] [INFO] Using worker: gthread
+Dec  1 14:25:05 ip-172-31-86-102 web[126272]: [2024-12-01 14:25:05 +0000] [126272] [INFO] Booting worker with pid: 126272
+Dec  1 14:25:05 ip-172-31-86-102 web[126275]: [2024-12-01 14:25:05 +0000] [126275] [INFO] Booting worker with pid: 126275
+Dec  1 14:25:05 ip-172-31-86-102 web[126276]: [2024-12-01 14:25:05 +0000] [126276] [INFO] Booting worker with pid: 126276
+Dec  1 14:25:06 ip-172-31-86-102 web[126272]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:25:06 ip-172-31-86-102 web[126276]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:25:06 ip-172-31-86-102 web[126275]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:25:06 ip-172-31-86-102 web[126272]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:25:06 ip-172-31-86-102 web[126275]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:25:06 ip-172-31-86-102 web[126276]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:25:06 ip-172-31-86-102 web[126272]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:25:06 ip-172-31-86-102 web[126276]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:25:06 ip-172-31-86-102 web[126275]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:25:07 ip-172-31-86-102 web[126272]: INFO:app:Successfully connected to S3
+Dec  1 14:25:07 ip-172-31-86-102 web[126276]: INFO:app:Successfully connected to S3
+Dec  1 14:25:07 ip-172-31-86-102 web[126275]: INFO:app:Successfully connected to S3
+Dec  1 14:26:25 ip-172-31-86-102 web[126265]: [2024-12-01 14:26:25 +0000] [126265] [INFO] Handling signal: term
+Dec  1 14:26:26 ip-172-31-86-102 web[126275]: [2024-12-01 14:26:26 +0000] [126275] [INFO] Worker exiting (pid: 126275)
+Dec  1 14:26:26 ip-172-31-86-102 web[126275]: No existing document store found, starting fresh
+Dec  1 14:26:26 ip-172-31-86-102 web[126276]: [2024-12-01 14:26:26 +0000] [126276] [INFO] Worker exiting (pid: 126276)
+Dec  1 14:26:26 ip-172-31-86-102 web[126276]: No existing document store found, starting fresh
+Dec  1 14:26:26 ip-172-31-86-102 web[126272]: [2024-12-01 14:26:26 +0000] [126272] [INFO] Worker exiting (pid: 126272)
+Dec  1 14:26:26 ip-172-31-86-102 web[126272]: No existing document store found, starting fresh
+Dec  1 14:26:27 ip-172-31-86-102 web[126265]: [2024-12-01 14:26:27 +0000] [126265] [INFO] Shutting down: Master
+Dec  1 14:26:30 ip-172-31-86-102 web[126719]: [2024-12-01 14:26:30 +0000] [126719] [INFO] Starting gunicorn 21.2.0
+Dec  1 14:26:30 ip-172-31-86-102 web[126719]: [2024-12-01 14:26:30 +0000] [126719] [INFO] Listening at: http://0.0.0.0:8000 (126719)
+Dec  1 14:26:30 ip-172-31-86-102 web[126719]: [2024-12-01 14:26:30 +0000] [126719] [INFO] Using worker: gthread
+Dec  1 14:26:30 ip-172-31-86-102 web[126728]: [2024-12-01 14:26:30 +0000] [126728] [INFO] Booting worker with pid: 126728
+Dec  1 14:26:30 ip-172-31-86-102 web[126729]: [2024-12-01 14:26:30 +0000] [126729] [INFO] Booting worker with pid: 126729
+Dec  1 14:26:30 ip-172-31-86-102 web[126730]: [2024-12-01 14:26:30 +0000] [126730] [INFO] Booting worker with pid: 126730
+Dec  1 14:26:32 ip-172-31-86-102 web[126728]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:26:32 ip-172-31-86-102 web[126730]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:26:32 ip-172-31-86-102 web[126729]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:26:32 ip-172-31-86-102 web[126729]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:26:32 ip-172-31-86-102 web[126730]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:26:32 ip-172-31-86-102 web[126728]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:26:32 ip-172-31-86-102 web[126728]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:26:32 ip-172-31-86-102 web[126729]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:26:32 ip-172-31-86-102 web[126730]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:26:32 ip-172-31-86-102 web[126729]: INFO:app:Successfully connected to S3
+Dec  1 14:26:32 ip-172-31-86-102 web[126728]: INFO:app:Successfully connected to S3
+Dec  1 14:26:32 ip-172-31-86-102 web[126730]: INFO:app:Successfully connected to S3
+Dec  1 14:33:28 ip-172-31-86-102 web[126719]: [2024-12-01 14:33:28 +0000] [126719] [INFO] Handling signal: term
+Dec  1 14:33:29 ip-172-31-86-102 web[126728]: [2024-12-01 14:33:29 +0000] [126728] [INFO] Worker exiting (pid: 126728)
+Dec  1 14:33:29 ip-172-31-86-102 web[126728]: No existing document store found, starting fresh
+Dec  1 14:33:29 ip-172-31-86-102 web[126730]: [2024-12-01 14:33:29 +0000] [126730] [INFO] Worker exiting (pid: 126730)
+Dec  1 14:33:29 ip-172-31-86-102 web[126730]: No existing document store found, starting fresh
+Dec  1 14:33:29 ip-172-31-86-102 web[126729]: [2024-12-01 14:33:29 +0000] [126729] [INFO] Worker exiting (pid: 126729)
+Dec  1 14:33:29 ip-172-31-86-102 web[126729]: No existing document store found, starting fresh
+Dec  1 14:33:29 ip-172-31-86-102 web[126719]: [2024-12-01 14:33:29 +0000] [126719] [INFO] Shutting down: Master
+Dec  1 14:33:31 ip-172-31-86-102 web[127395]: [2024-12-01 14:33:31 +0000] [127395] [INFO] Starting gunicorn 21.2.0
+Dec  1 14:33:31 ip-172-31-86-102 web[127395]: [2024-12-01 14:33:31 +0000] [127395] [INFO] Listening at: http://0.0.0.0:8000 (127395)
+Dec  1 14:33:31 ip-172-31-86-102 web[127395]: [2024-12-01 14:33:31 +0000] [127395] [INFO] Using worker: gthread
+Dec  1 14:33:31 ip-172-31-86-102 web[127402]: [2024-12-01 14:33:31 +0000] [127402] [INFO] Booting worker with pid: 127402
+Dec  1 14:33:31 ip-172-31-86-102 web[127405]: [2024-12-01 14:33:31 +0000] [127405] [INFO] Booting worker with pid: 127405
+Dec  1 14:33:32 ip-172-31-86-102 web[127406]: [2024-12-01 14:33:32 +0000] [127406] [INFO] Booting worker with pid: 127406
+Dec  1 14:33:33 ip-172-31-86-102 web[127406]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:33:33 ip-172-31-86-102 web[127406]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:33:33 ip-172-31-86-102 web[127405]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:33:33 ip-172-31-86-102 web[127405]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:33:33 ip-172-31-86-102 web[127402]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:33:33 ip-172-31-86-102 web[127402]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:33:33 ip-172-31-86-102 web[127406]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:33:33 ip-172-31-86-102 web[127405]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:33:33 ip-172-31-86-102 web[127402]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:33:34 ip-172-31-86-102 web[127405]: INFO:app:Successfully connected to S3
+Dec  1 14:33:34 ip-172-31-86-102 web[127402]: INFO:app:Successfully connected to S3
+Dec  1 14:33:34 ip-172-31-86-102 web[127406]: INFO:app:Successfully connected to S3
+Dec  1 14:39:52 ip-172-31-86-102 web[127395]: [2024-12-01 14:39:52 +0000] [127395] [INFO] Handling signal: term
+Dec  1 14:39:52 ip-172-31-86-102 web[127402]: [2024-12-01 14:39:52 +0000] [127402] [INFO] Worker exiting (pid: 127402)
+Dec  1 14:39:52 ip-172-31-86-102 web[127402]: No existing document store found, starting fresh
+Dec  1 14:39:52 ip-172-31-86-102 web[127405]: [2024-12-01 14:39:52 +0000] [127405] [INFO] Worker exiting (pid: 127405)
+Dec  1 14:39:52 ip-172-31-86-102 web[127406]: [2024-12-01 14:39:52 +0000] [127406] [INFO] Worker exiting (pid: 127406)
+Dec  1 14:39:52 ip-172-31-86-102 web[127406]: No existing document store found, starting fresh
+Dec  1 14:39:52 ip-172-31-86-102 web[127405]: No existing document store found, starting fresh
+Dec  1 14:39:53 ip-172-31-86-102 web[127395]: [2024-12-01 14:39:53 +0000] [127395] [INFO] Shutting down: Master
+Dec  1 14:39:55 ip-172-31-86-102 web[128095]: [2024-12-01 14:39:55 +0000] [128095] [INFO] Starting gunicorn 21.2.0
+Dec  1 14:39:55 ip-172-31-86-102 web[128095]: [2024-12-01 14:39:55 +0000] [128095] [INFO] Listening at: http://0.0.0.0:8000 (128095)
+Dec  1 14:39:55 ip-172-31-86-102 web[128095]: [2024-12-01 14:39:55 +0000] [128095] [INFO] Using worker: gthread
+Dec  1 14:39:55 ip-172-31-86-102 web[128104]: [2024-12-01 14:39:55 +0000] [128104] [INFO] Booting worker with pid: 128104
+Dec  1 14:39:56 ip-172-31-86-102 web[128105]: [2024-12-01 14:39:56 +0000] [128105] [INFO] Booting worker with pid: 128105
+Dec  1 14:39:56 ip-172-31-86-102 web[128106]: [2024-12-01 14:39:56 +0000] [128106] [INFO] Booting worker with pid: 128106
+Dec  1 14:39:58 ip-172-31-86-102 web[128104]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:39:58 ip-172-31-86-102 web[128106]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:39:58 ip-172-31-86-102 web[128105]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:39:58 ip-172-31-86-102 web[128106]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:39:58 ip-172-31-86-102 web[128104]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:39:58 ip-172-31-86-102 web[128105]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:39:58 ip-172-31-86-102 web[128106]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:39:58 ip-172-31-86-102 web[128104]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:39:58 ip-172-31-86-102 web[128105]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:39:58 ip-172-31-86-102 web[128105]: INFO:app:Successfully connected to S3
+Dec  1 14:39:58 ip-172-31-86-102 web[128106]: INFO:app:Successfully connected to S3
+Dec  1 14:39:58 ip-172-31-86-102 web[128104]: INFO:app:Successfully connected to S3
+Dec  1 14:47:12 ip-172-31-86-102 web[128095]: [2024-12-01 14:47:12 +0000] [128095] [INFO] Handling signal: term
+Dec  1 14:47:13 ip-172-31-86-102 web[128104]: [2024-12-01 14:47:13 +0000] [128104] [INFO] Worker exiting (pid: 128104)
+Dec  1 14:47:13 ip-172-31-86-102 web[128104]: No existing document store found, starting fresh
+Dec  1 14:47:13 ip-172-31-86-102 web[128105]: [2024-12-01 14:47:13 +0000] [128105] [INFO] Worker exiting (pid: 128105)
+Dec  1 14:47:13 ip-172-31-86-102 web[128105]: No existing document store found, starting fresh
+Dec  1 14:47:13 ip-172-31-86-102 web[128106]: [2024-12-01 14:47:13 +0000] [128106] [INFO] Worker exiting (pid: 128106)
+Dec  1 14:47:13 ip-172-31-86-102 web[128106]: No existing document store found, starting fresh
+Dec  1 14:47:13 ip-172-31-86-102 web[128095]: [2024-12-01 14:47:13 +0000] [128095] [INFO] Shutting down: Master
+Dec  1 14:47:15 ip-172-31-86-102 web[128777]: [2024-12-01 14:47:15 +0000] [128777] [INFO] Starting gunicorn 21.2.0
+Dec  1 14:47:15 ip-172-31-86-102 web[128777]: [2024-12-01 14:47:15 +0000] [128777] [INFO] Listening at: unix:/tmp/gunicorn.sock (128777)
+Dec  1 14:47:15 ip-172-31-86-102 web[128777]: [2024-12-01 14:47:15 +0000] [128777] [INFO] Using worker: gthread
+Dec  1 14:47:15 ip-172-31-86-102 web[128784]: [2024-12-01 14:47:15 +0000] [128784] [INFO] Booting worker with pid: 128784
+Dec  1 14:47:15 ip-172-31-86-102 web[128787]: [2024-12-01 14:47:15 +0000] [128787] [INFO] Booting worker with pid: 128787
+Dec  1 14:47:15 ip-172-31-86-102 web[128788]: [2024-12-01 14:47:15 +0000] [128788] [INFO] Booting worker with pid: 128788
+Dec  1 14:47:17 ip-172-31-86-102 web[128787]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:47:17 ip-172-31-86-102 web[128784]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:47:17 ip-172-31-86-102 web[128784]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:47:17 ip-172-31-86-102 web[128787]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:47:17 ip-172-31-86-102 web[128788]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 14:47:17 ip-172-31-86-102 web[128788]: INFO:app:Initializing with S3 bucket: genas-storage-241130
+Dec  1 14:47:17 ip-172-31-86-102 web[128784]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:47:17 ip-172-31-86-102 web[128787]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:47:17 ip-172-31-86-102 web[128788]: INFO:botocore.credentials:Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 14:47:18 ip-172-31-86-102 web[128784]: INFO:app:Successfully connected to S3
+Dec  1 14:47:18 ip-172-31-86-102 web[128787]: INFO:app:Successfully connected to S3
+Dec  1 14:47:18 ip-172-31-86-102 web[128788]: INFO:app:Successfully connected to S3
+Dec  1 15:57:33 ip-172-31-86-102 web[128777]: [2024-12-01 15:57:33 +0000] [128777] [INFO] Handling signal: term
+Dec  1 15:57:34 ip-172-31-86-102 web[128784]: [2024-12-01 15:57:34 +0000] [128784] [INFO] Worker exiting (pid: 128784)
+Dec  1 15:57:34 ip-172-31-86-102 web[128784]: No existing document store found, starting fresh
+Dec  1 15:57:34 ip-172-31-86-102 web[128787]: [2024-12-01 15:57:34 +0000] [128787] [INFO] Worker exiting (pid: 128787)
+Dec  1 15:57:34 ip-172-31-86-102 web[128788]: [2024-12-01 15:57:34 +0000] [128788] [INFO] Worker exiting (pid: 128788)
+Dec  1 15:57:34 ip-172-31-86-102 web[128787]: No existing document store found, starting fresh
+Dec  1 15:57:34 ip-172-31-86-102 web[128788]: No existing document store found, starting fresh
+Dec  1 15:57:35 ip-172-31-86-102 web[128777]: [2024-12-01 15:57:35 +0000] [128777] [INFO] Shutting down: Master
+Dec  1 15:57:37 ip-172-31-86-102 web[179201]: [2024-12-01 15:57:37 +0000] [179201] [INFO] Starting gunicorn 21.2.0
+Dec  1 15:57:37 ip-172-31-86-102 web[179201]: [2024-12-01 15:57:37 +0000] [179201] [INFO] Listening at: http://127.0.0.1:8000 (179201)
+Dec  1 15:57:37 ip-172-31-86-102 web[179201]: [2024-12-01 15:57:37 +0000] [179201] [INFO] Using worker: sync
+Dec  1 15:57:37 ip-172-31-86-102 web[179208]: [2024-12-01 15:57:37 +0000] [179208] [INFO] Booting worker with pid: 179208
+Dec  1 15:57:39 ip-172-31-86-102 web[179208]: 2024-12-01 15:57:39,083 - app - INFO - Starting application...
+Dec  1 15:57:39 ip-172-31-86-102 web[179208]: 2024-12-01 15:57:39,083 - app - INFO - Environment: production
+Dec  1 15:57:39 ip-172-31-86-102 web[179208]: 2024-12-01 15:57:39,083 - app - INFO - Python version: 3.11.6 (main, Oct 23 2024, 00:00:00) [GCC 11.4.1 20230605 (Red Hat 11.4.1-2)]
+Dec  1 15:57:39 ip-172-31-86-102 web[179208]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 15:57:39 ip-172-31-86-102 web[179208]: 2024-12-01 15:57:39,099 - app - INFO - Initializing with S3 bucket: genas-storage-241130
+Dec  1 15:57:39 ip-172-31-86-102 web[179208]: 2024-12-01 15:57:39,119 - botocore.credentials - INFO - Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 15:57:39 ip-172-31-86-102 web[179208]: 2024-12-01 15:57:39,341 - app - INFO - Successfully connected to S3
+Dec  1 15:59:30 ip-172-31-86-102 web[179208]: [2024-12-01 15:59:29 +0000] [179208] [INFO] Worker exiting (pid: 179208)
+Dec  1 15:59:30 ip-172-31-86-102 web[179208]: No existing document store found, starting fresh
+Dec  1 15:59:30 ip-172-31-86-102 web[179201]: [2024-12-01 15:59:30 +0000] [179201] [INFO] Handling signal: term
+Dec  1 15:59:30 ip-172-31-86-102 web[179201]: [2024-12-01 15:59:30 +0000] [179201] [ERROR] Worker (pid:179208) was sent SIGTERM!
+Dec  1 15:59:30 ip-172-31-86-102 web[179201]: [2024-12-01 15:59:30 +0000] [179201] [INFO] Shutting down: Master
+Dec  1 15:59:31 ip-172-31-86-102 web[179672]: [2024-12-01 15:59:31 +0000] [179672] [INFO] Starting gunicorn 21.2.0
+Dec  1 15:59:31 ip-172-31-86-102 web[179672]: [2024-12-01 15:59:31 +0000] [179672] [INFO] Listening at: http://127.0.0.1:8000 (179672)
+Dec  1 15:59:31 ip-172-31-86-102 web[179672]: [2024-12-01 15:59:31 +0000] [179672] [INFO] Using worker: sync
+Dec  1 15:59:31 ip-172-31-86-102 web[179678]: [2024-12-01 15:59:31 +0000] [179678] [INFO] Booting worker with pid: 179678
+Dec  1 15:59:32 ip-172-31-86-102 web[179678]: 2024-12-01 15:59:32,783 - app - INFO - Starting application...
+Dec  1 15:59:32 ip-172-31-86-102 web[179678]: 2024-12-01 15:59:32,783 - app - INFO - Environment: production
+Dec  1 15:59:32 ip-172-31-86-102 web[179678]: 2024-12-01 15:59:32,783 - app - INFO - Python version: 3.11.6 (main, Oct 23 2024, 00:00:00) [GCC 11.4.1 20230605 (Red Hat 11.4.1-2)]
+Dec  1 15:59:32 ip-172-31-86-102 web[179678]: 'FLASK_ENV' is deprecated and will not be used in Flask 2.3. Use 'FLASK_DEBUG' instead.
+Dec  1 15:59:32 ip-172-31-86-102 web[179678]: 2024-12-01 15:59:32,787 - app - INFO - Initializing with S3 bucket: genas-storage-241130
+Dec  1 15:59:32 ip-172-31-86-102 web[179678]: 2024-12-01 15:59:32,808 - botocore.credentials - INFO - Found credentials from IAM Role: aws-elasticbeanstalk-ec2-role
+Dec  1 15:59:32 ip-172-31-86-102 web[179678]: 2024-12-01 15:59:32,973 - app - INFO - Successfully connected to S3

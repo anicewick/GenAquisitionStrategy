@@ -1,0 +1,552 @@
+2024-11-29 12:59:48,896 [INFO] -----------------------Starting build-----------------------
+2024-11-29 12:59:48,903 [INFO] Running configSets: _OnInstanceBoot
+2024-11-29 12:59:48,907 [INFO] Running configSet _OnInstanceBoot
+2024-11-29 12:59:48,912 [INFO] Running config AWSEBBaseConfig
+2024-11-29 12:59:49,372 [INFO] Command clearbackupfiles succeeded
+2024-11-29 12:59:49,375 [INFO] Running config AWSEBCfnHupEndpointOverride
+2024-11-29 12:59:49,384 [INFO] Command clearbackupfiles succeeded
+2024-11-29 12:59:49,385 [INFO] ConfigSets completed
+2024-11-29 12:59:49,385 [INFO] -----------------------Build complete-----------------------
+2024-11-29 13:02:26,697 [INFO] -----------------------Starting build-----------------------
+2024-11-29 13:02:26,701 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-11-29 13:02:26,704 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-11-29 13:02:26,704 [INFO] ConfigSets completed
+2024-11-29 13:02:26,704 [INFO] -----------------------Build complete-----------------------
+2024-11-29 13:02:55,152 [INFO] -----------------------Starting build-----------------------
+2024-11-29 13:02:55,158 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-11-29 13:02:55,161 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-11-29 13:02:55,162 [INFO] ConfigSets completed
+2024-11-29 13:02:55,162 [INFO] -----------------------Build complete-----------------------
+2024-11-30 10:25:55,029 [INFO] -----------------------Starting build-----------------------
+2024-11-30 10:25:55,035 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-11-30 10:25:55,037 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-11-30 10:25:55,038 [INFO] ConfigSets completed
+2024-11-30 10:25:55,038 [INFO] -----------------------Build complete-----------------------
+2024-11-30 10:26:02,919 [INFO] -----------------------Starting build-----------------------
+2024-11-30 10:26:02,923 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-11-30 10:26:02,925 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-11-30 10:26:02,925 [INFO] ConfigSets completed
+2024-11-30 10:26:02,925 [INFO] -----------------------Build complete-----------------------
+2024-11-30 10:48:14,077 [INFO] -----------------------Starting build-----------------------
+2024-11-30 10:48:14,083 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-11-30 10:48:14,085 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-11-30 10:48:14,088 [INFO] Running config prebuild_0_genas
+2024-11-30 10:48:14,089 [INFO] ConfigSets completed
+2024-11-30 10:48:14,089 [INFO] -----------------------Build complete-----------------------
+2024-11-30 10:48:21,895 [INFO] -----------------------Starting build-----------------------
+2024-11-30 10:48:21,899 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-11-30 10:48:21,901 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-11-30 10:48:21,901 [INFO] ConfigSets completed
+2024-11-30 10:48:21,901 [INFO] -----------------------Build complete-----------------------
+2024-11-30 10:50:23,782 [INFO] -----------------------Starting build-----------------------
+2024-11-30 10:50:23,787 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-11-30 10:50:23,789 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-11-30 10:50:23,791 [INFO] Running config prebuild_0_genas
+2024-11-30 10:50:23,793 [INFO] ConfigSets completed
+2024-11-30 10:50:23,793 [INFO] -----------------------Build complete-----------------------
+2024-11-30 10:50:31,686 [INFO] -----------------------Starting build-----------------------
+2024-11-30 10:50:31,691 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-11-30 10:50:31,693 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-11-30 10:50:31,694 [INFO] ConfigSets completed
+2024-11-30 10:50:31,694 [INFO] -----------------------Build complete-----------------------
+2024-11-30 10:59:22,546 [INFO] -----------------------Starting build-----------------------
+2024-11-30 10:59:22,550 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-11-30 10:59:22,552 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-11-30 10:59:22,554 [INFO] Running config prebuild_0_genas
+2024-11-30 10:59:22,557 [INFO] ConfigSets completed
+2024-11-30 10:59:22,557 [INFO] -----------------------Build complete-----------------------
+2024-11-30 10:59:30,138 [INFO] -----------------------Starting build-----------------------
+2024-11-30 10:59:30,143 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-11-30 10:59:30,145 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-11-30 10:59:30,147 [INFO] Running config postbuild_0_genas
+2024-11-30 10:59:30,180 [INFO] Command 01_create_upload_dir succeeded
+2024-11-30 10:59:30,192 [INFO] Command 02_create_versions_dir succeeded
+2024-11-30 10:59:30,192 [INFO] ConfigSets completed
+2024-11-30 10:59:30,193 [INFO] -----------------------Build complete-----------------------
+2024-11-30 11:09:45,068 [INFO] -----------------------Starting build-----------------------
+2024-11-30 11:09:45,074 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-11-30 11:09:45,076 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-11-30 11:09:45,079 [INFO] Running config prebuild_0_genas
+2024-11-30 11:09:45,080 [INFO] ConfigSets completed
+2024-11-30 11:09:45,080 [INFO] -----------------------Build complete-----------------------
+2024-11-30 11:09:52,663 [INFO] -----------------------Starting build-----------------------
+2024-11-30 11:09:52,670 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-11-30 11:09:52,673 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-11-30 11:09:52,676 [INFO] Running config postbuild_0_genas
+2024-11-30 11:09:52,751 [ERROR] Command 01_reload_nginx (service nginx reload) failed
+2024-11-30 11:09:52,751 [ERROR] Error encountered during build of postbuild_0_genas: Command 01_reload_nginx failed
+Traceback (most recent call last):
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 579, in run_config
+    CloudFormationCarpenter(config, self._auth_config, self.strict_mode).build(worklog)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 277, in build
+    changes['commands'] = CommandTool().apply(
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/command_tool.py", line 127, in apply
+    raise ToolError(u"Command %s failed" % name)
+cfnbootstrap.construction_errors.ToolError: Command 01_reload_nginx failed
+2024-11-30 11:09:52,755 [ERROR] -----------------------BUILD FAILED!------------------------
+2024-11-30 11:09:52,755 [ERROR] Unhandled exception during build: Command 01_reload_nginx failed
+Traceback (most recent call last):
+  File "/opt/aws/bin/cfn-init", line 181, in <module>
+    worklog.build(metadata, configSets, strict_mode)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 137, in build
+    Contractor(metadata, strict_mode).build(configSets, self)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 567, in build
+    self.run_config(config, worklog)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 579, in run_config
+    CloudFormationCarpenter(config, self._auth_config, self.strict_mode).build(worklog)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 277, in build
+    changes['commands'] = CommandTool().apply(
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/command_tool.py", line 127, in apply
+    raise ToolError(u"Command %s failed" % name)
+cfnbootstrap.construction_errors.ToolError: Command 01_reload_nginx failed
+2024-11-30 11:18:07,076 [INFO] -----------------------Starting build-----------------------
+2024-11-30 11:18:07,080 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-11-30 11:18:07,083 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-11-30 11:18:07,085 [INFO] Running config prebuild_0_genas
+2024-11-30 11:18:07,087 [INFO] ConfigSets completed
+2024-11-30 11:18:07,087 [INFO] -----------------------Build complete-----------------------
+2024-11-30 11:18:14,908 [INFO] -----------------------Starting build-----------------------
+2024-11-30 11:18:14,913 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-11-30 11:18:14,914 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-11-30 11:18:14,916 [INFO] Running config postbuild_0_genas
+2024-11-30 11:18:14,929 [INFO] Command 01_create_upload_dir succeeded
+2024-11-30 11:18:14,941 [INFO] Command 02_create_versions_dir succeeded
+2024-11-30 11:18:14,942 [INFO] ConfigSets completed
+2024-11-30 11:18:14,942 [INFO] -----------------------Build complete-----------------------
+2024-11-30 11:44:35,361 [INFO] -----------------------Starting build-----------------------
+2024-11-30 11:44:35,366 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-11-30 11:44:35,367 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-11-30 11:44:35,372 [INFO] Running config prebuild_0_genas
+2024-11-30 11:44:35,374 [INFO] ConfigSets completed
+2024-11-30 11:44:35,374 [INFO] -----------------------Build complete-----------------------
+2024-11-30 11:44:43,233 [INFO] -----------------------Starting build-----------------------
+2024-11-30 11:44:43,237 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-11-30 11:44:43,240 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-11-30 11:44:43,242 [INFO] Running config postbuild_0_genas
+2024-11-30 11:44:43,258 [INFO] Command 01_create_upload_dir succeeded
+2024-11-30 11:44:43,269 [INFO] Command 02_create_versions_dir succeeded
+2024-11-30 11:44:43,270 [INFO] ConfigSets completed
+2024-11-30 11:44:43,270 [INFO] -----------------------Build complete-----------------------
+2024-12-01 03:15:37,058 [INFO] -----------------------Starting build-----------------------
+2024-12-01 03:15:37,064 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 03:15:37,066 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 03:15:37,071 [INFO] Running config prebuild_0_genas
+2024-12-01 03:15:37,075 [INFO] Running config prebuild_1_genas
+2024-12-01 03:15:37,076 [INFO] ConfigSets completed
+2024-12-01 03:15:37,077 [INFO] -----------------------Build complete-----------------------
+2024-12-01 03:15:50,919 [INFO] -----------------------Starting build-----------------------
+2024-12-01 03:15:50,925 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 03:15:50,927 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 03:15:50,929 [INFO] Running config postbuild_0_genas
+2024-12-01 03:15:50,956 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 03:15:50,969 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 03:15:50,971 [INFO] Running config postbuild_1_genas
+2024-12-01 03:15:50,983 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 03:15:50,994 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 03:15:50,995 [INFO] ConfigSets completed
+2024-12-01 03:15:50,995 [INFO] -----------------------Build complete-----------------------
+2024-12-01 10:40:04,296 [INFO] -----------------------Starting build-----------------------
+2024-12-01 10:40:04,301 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 10:40:04,303 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 10:40:04,306 [INFO] Running config prebuild_0_genas
+2024-12-01 10:40:04,309 [INFO] Running config prebuild_1_genas
+2024-12-01 10:40:04,310 [INFO] ConfigSets completed
+2024-12-01 10:40:04,311 [INFO] -----------------------Build complete-----------------------
+2024-12-01 10:40:13,739 [INFO] -----------------------Starting build-----------------------
+2024-12-01 10:40:13,745 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 10:40:13,748 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 10:40:13,753 [INFO] Running config postbuild_0_genas
+2024-12-01 10:40:13,773 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 10:40:13,784 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 10:40:13,787 [INFO] Running config postbuild_1_genas
+2024-12-01 10:40:13,799 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 10:40:13,810 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 10:40:13,811 [INFO] ConfigSets completed
+2024-12-01 10:40:13,811 [INFO] -----------------------Build complete-----------------------
+2024-12-01 11:00:34,464 [INFO] -----------------------Starting build-----------------------
+2024-12-01 11:00:34,470 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 11:00:34,473 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 11:00:34,479 [INFO] Running config prebuild_0_genas
+2024-12-01 11:00:34,484 [INFO] Running config prebuild_1_genas
+2024-12-01 11:00:34,485 [INFO] ConfigSets completed
+2024-12-01 11:00:34,485 [INFO] -----------------------Build complete-----------------------
+2024-12-01 11:00:49,702 [INFO] -----------------------Starting build-----------------------
+2024-12-01 11:00:49,707 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 11:00:49,709 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 11:00:49,712 [INFO] Running config postbuild_0_genas
+2024-12-01 11:00:49,727 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 11:00:49,739 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 11:00:49,751 [INFO] Command 03_create_sessions_dir succeeded
+2024-12-01 11:00:49,758 [INFO] Running config postbuild_1_genas
+2024-12-01 11:00:49,773 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 11:00:49,784 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 11:00:49,786 [INFO] ConfigSets completed
+2024-12-01 11:00:49,786 [INFO] -----------------------Build complete-----------------------
+2024-12-01 11:03:02,594 [INFO] -----------------------Starting build-----------------------
+2024-12-01 11:03:02,598 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 11:03:02,602 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 11:03:02,605 [INFO] Running config prebuild_0_genas
+2024-12-01 11:03:02,608 [INFO] Running config prebuild_1_genas
+2024-12-01 11:03:02,610 [INFO] ConfigSets completed
+2024-12-01 11:03:02,610 [INFO] -----------------------Build complete-----------------------
+2024-12-01 11:03:11,918 [INFO] -----------------------Starting build-----------------------
+2024-12-01 11:03:11,923 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 11:03:11,925 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 11:03:11,927 [INFO] Running config postbuild_0_genas
+2024-12-01 11:03:11,944 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 11:03:11,956 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 11:03:11,967 [INFO] Command 03_create_sessions_dir succeeded
+2024-12-01 11:03:11,970 [INFO] Running config postbuild_1_genas
+2024-12-01 11:03:11,982 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 11:03:11,995 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 11:03:11,996 [INFO] ConfigSets completed
+2024-12-01 11:03:11,996 [INFO] -----------------------Build complete-----------------------
+2024-12-01 11:04:54,492 [INFO] -----------------------Starting build-----------------------
+2024-12-01 11:04:54,496 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 11:04:54,498 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 11:04:54,500 [INFO] Running config prebuild_0_genas
+2024-12-01 11:04:54,503 [INFO] Running config prebuild_1_genas
+2024-12-01 11:04:54,504 [INFO] ConfigSets completed
+2024-12-01 11:04:54,504 [INFO] -----------------------Build complete-----------------------
+2024-12-01 11:05:03,639 [INFO] -----------------------Starting build-----------------------
+2024-12-01 11:05:03,644 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 11:05:03,646 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 11:05:03,649 [INFO] Running config postbuild_0_genas
+2024-12-01 11:05:03,666 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 11:05:03,680 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 11:05:03,692 [INFO] Command 03_create_sessions_dir succeeded
+2024-12-01 11:05:03,695 [INFO] Running config postbuild_1_genas
+2024-12-01 11:05:03,707 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 11:05:03,719 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 11:05:03,720 [INFO] ConfigSets completed
+2024-12-01 11:05:03,720 [INFO] -----------------------Build complete-----------------------
+2024-12-01 13:55:06,295 [INFO] -----------------------Starting build-----------------------
+2024-12-01 13:55:06,299 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 13:55:06,301 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 13:55:06,305 [INFO] Running config prebuild_0_genas
+2024-12-01 13:55:06,309 [INFO] Running config prebuild_1_genas
+2024-12-01 13:55:06,310 [INFO] ConfigSets completed
+2024-12-01 13:55:06,310 [INFO] -----------------------Build complete-----------------------
+2024-12-01 13:55:15,413 [INFO] -----------------------Starting build-----------------------
+2024-12-01 13:55:15,418 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 13:55:15,421 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 13:55:15,424 [INFO] Running config postbuild_0_genas
+2024-12-01 13:55:15,441 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 13:55:15,452 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 13:55:15,464 [INFO] Command 03_create_sessions_dir succeeded
+2024-12-01 13:55:15,466 [INFO] Running config postbuild_1_genas
+2024-12-01 13:55:15,478 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 13:55:15,489 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 13:55:15,490 [INFO] ConfigSets completed
+2024-12-01 13:55:15,490 [INFO] -----------------------Build complete-----------------------
+2024-12-01 13:57:13,206 [INFO] -----------------------Starting build-----------------------
+2024-12-01 13:57:13,213 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 13:57:13,215 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 13:57:13,219 [INFO] Running config prebuild_0_genas
+2024-12-01 13:57:13,222 [INFO] Running config prebuild_1_genas
+2024-12-01 13:57:13,224 [INFO] ConfigSets completed
+2024-12-01 13:57:13,224 [INFO] -----------------------Build complete-----------------------
+2024-12-01 13:57:22,059 [INFO] -----------------------Starting build-----------------------
+2024-12-01 13:57:22,065 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 13:57:22,067 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 13:57:22,069 [INFO] Running config postbuild_0_genas
+2024-12-01 13:57:22,089 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 13:57:22,100 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 13:57:22,112 [INFO] Command 03_create_sessions_dir succeeded
+2024-12-01 13:57:22,116 [INFO] Running config postbuild_1_genas
+2024-12-01 13:57:22,127 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 13:57:22,139 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 13:57:22,140 [INFO] ConfigSets completed
+2024-12-01 13:57:22,140 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:17:59,255 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:17:59,260 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 14:17:59,262 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 14:17:59,268 [INFO] Running config prebuild_0_genas
+2024-12-01 14:17:59,274 [INFO] Running config prebuild_1_genas
+2024-12-01 14:17:59,275 [INFO] ConfigSets completed
+2024-12-01 14:17:59,275 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:18:08,407 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:18:08,414 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 14:18:08,415 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 14:18:08,419 [INFO] Running config postbuild_0_genas
+2024-12-01 14:18:08,434 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:18:08,446 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:18:08,457 [INFO] Command 03_create_sessions_dir succeeded
+2024-12-01 14:18:08,460 [INFO] Running config postbuild_1_genas
+2024-12-01 14:18:08,473 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:18:08,484 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:18:08,485 [INFO] ConfigSets completed
+2024-12-01 14:18:08,485 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:19:03,849 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:19:03,853 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 14:19:03,855 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 14:19:03,856 [INFO] Running config prebuild_0_genas
+2024-12-01 14:19:03,859 [INFO] Running config prebuild_1_genas
+2024-12-01 14:19:03,860 [INFO] ConfigSets completed
+2024-12-01 14:19:03,860 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:19:13,155 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:19:13,160 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 14:19:13,163 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 14:19:13,165 [INFO] Running config postbuild_0_genas
+2024-12-01 14:19:13,182 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:19:13,195 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:19:13,207 [INFO] Command 03_create_sessions_dir succeeded
+2024-12-01 14:19:13,209 [INFO] Running config postbuild_1_genas
+2024-12-01 14:19:13,222 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:19:13,233 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:19:13,234 [INFO] ConfigSets completed
+2024-12-01 14:19:13,235 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:23:27,012 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:23:27,017 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 14:23:27,019 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 14:23:27,021 [INFO] Running config prebuild_0_genas
+2024-12-01 14:23:27,024 [INFO] Running config prebuild_1_genas
+2024-12-01 14:23:27,025 [INFO] ConfigSets completed
+2024-12-01 14:23:27,025 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:23:36,155 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:23:36,161 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 14:23:36,162 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 14:23:36,165 [INFO] Running config postbuild_0_genas
+2024-12-01 14:23:36,182 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:23:36,194 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:23:36,206 [INFO] Command 03_create_sessions_dir succeeded
+2024-12-01 14:23:36,208 [INFO] Running config postbuild_1_genas
+2024-12-01 14:23:36,220 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:23:36,232 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:23:36,233 [INFO] ConfigSets completed
+2024-12-01 14:23:36,233 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:24:52,800 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:24:52,804 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 14:24:52,806 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 14:24:52,809 [INFO] Running config prebuild_0_genas
+2024-12-01 14:24:52,812 [INFO] Running config prebuild_1_genas
+2024-12-01 14:24:52,814 [INFO] ConfigSets completed
+2024-12-01 14:24:52,814 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:25:01,937 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:25:01,943 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 14:25:01,945 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 14:25:01,948 [INFO] Running config postbuild_0_genas
+2024-12-01 14:25:01,966 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:25:01,979 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:25:01,993 [INFO] Command 03_create_sessions_dir succeeded
+2024-12-01 14:25:01,995 [INFO] Running config postbuild_1_genas
+2024-12-01 14:25:02,008 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:25:02,020 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:25:02,021 [INFO] ConfigSets completed
+2024-12-01 14:25:02,021 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:26:16,315 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:26:16,321 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 14:26:16,323 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 14:26:16,325 [INFO] Running config prebuild_0_genas
+2024-12-01 14:26:16,329 [INFO] Running config prebuild_1_genas
+2024-12-01 14:26:16,330 [INFO] ConfigSets completed
+2024-12-01 14:26:16,330 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:26:25,411 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:26:25,416 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 14:26:25,419 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 14:26:25,421 [INFO] Running config postbuild_0_genas
+2024-12-01 14:26:25,439 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:26:25,451 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:26:25,463 [INFO] Command 03_create_sessions_dir succeeded
+2024-12-01 14:26:25,465 [INFO] Running config postbuild_1_genas
+2024-12-01 14:26:25,477 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:26:25,488 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:26:25,489 [INFO] ConfigSets completed
+2024-12-01 14:26:25,489 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:33:19,278 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:33:19,284 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 14:33:19,287 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 14:33:19,290 [INFO] Running config prebuild_0_genas
+2024-12-01 14:33:19,294 [INFO] Running config prebuild_1_genas
+2024-12-01 14:33:19,295 [INFO] ConfigSets completed
+2024-12-01 14:33:19,295 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:33:28,655 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:33:28,660 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 14:33:28,663 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 14:33:28,666 [INFO] Running config postbuild_0_genas
+2024-12-01 14:33:28,687 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:33:28,699 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:33:28,711 [INFO] Command 03_create_sessions_dir succeeded
+2024-12-01 14:33:28,714 [INFO] Running config postbuild_1_genas
+2024-12-01 14:33:28,725 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:33:28,737 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:33:28,738 [INFO] ConfigSets completed
+2024-12-01 14:33:28,738 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:39:13,761 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:39:13,767 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 14:39:13,769 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 14:39:13,772 [INFO] Running config prebuild_0_genas
+2024-12-01 14:39:13,776 [INFO] Running config prebuild_1_genas
+2024-12-01 14:39:17,867 [INFO] Yum installed ['python3-devel']
+2024-12-01 14:39:17,871 [INFO] Running config prebuild_2_genas
+2024-12-01 14:39:17,873 [INFO] ConfigSets completed
+2024-12-01 14:39:17,873 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:39:27,922 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:39:27,929 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 14:39:27,932 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 14:39:27,934 [INFO] Running config postbuild_0_genas
+2024-12-01 14:39:27,962 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:39:27,974 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:39:27,986 [INFO] Command 03_create_sessions_dir succeeded
+2024-12-01 14:39:51,498 [INFO] Command 04_install_requirements succeeded
+2024-12-01 14:39:51,505 [INFO] Running config postbuild_1_genas
+2024-12-01 14:39:51,595 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:39:51,607 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:39:51,608 [INFO] ConfigSets completed
+2024-12-01 14:39:51,608 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:46:59,748 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:46:59,755 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 14:46:59,758 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 14:46:59,761 [INFO] Running config prebuild_0_genas
+2024-12-01 14:46:59,766 [INFO] Running config prebuild_1_genas
+2024-12-01 14:47:01,638 [INFO] Running config prebuild_2_genas
+2024-12-01 14:47:01,639 [INFO] ConfigSets completed
+2024-12-01 14:47:01,640 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:47:11,174 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:47:11,180 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 14:47:11,181 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 14:47:11,184 [INFO] Running config postbuild_0_genas
+2024-12-01 14:47:11,201 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:47:11,213 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:47:11,225 [INFO] Command 03_create_sessions_dir succeeded
+2024-12-01 14:47:12,541 [INFO] Command 04_install_requirements succeeded
+2024-12-01 14:47:12,543 [INFO] Running config postbuild_1_genas
+2024-12-01 14:47:12,558 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:47:12,569 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:47:12,570 [INFO] ConfigSets completed
+2024-12-01 14:47:12,571 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:53:49,389 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:53:49,394 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 14:53:49,396 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 14:53:49,399 [INFO] Running config prebuild_0_genas
+2024-12-01 14:53:49,403 [INFO] Running config prebuild_1_genas
+2024-12-01 14:54:13,066 [INFO] Yum installed ['libffi-devel', 'openssl-devel', 'pango-devel', 'gcc-c++', 'gdk-pixbuf2-devel', 'cairo-devel', 'python3-pip']
+2024-12-01 14:54:14,824 [INFO] Command 01_upgrade_pip succeeded
+2024-12-01 14:54:14,832 [INFO] Running config prebuild_2_genas
+2024-12-01 14:54:14,839 [INFO] Running config prebuild_3_genas
+2024-12-01 14:54:14,844 [INFO] ConfigSets completed
+2024-12-01 14:54:14,844 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:54:30,396 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:54:30,406 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 14:54:30,410 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 14:54:30,415 [INFO] Running config postbuild_0_genas
+2024-12-01 14:54:30,449 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 14:54:30,476 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 14:54:30,498 [INFO] Command 03_create_sessions_dir succeeded
+2024-12-01 14:55:13,497 [ERROR] Command 04_install_requirements (pip install -r requirements.txt --no-cache-dir) failed
+2024-12-01 14:55:13,498 [ERROR] Error encountered during build of postbuild_0_genas: Command 04_install_requirements failed
+Traceback (most recent call last):
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 579, in run_config
+    CloudFormationCarpenter(config, self._auth_config, self.strict_mode).build(worklog)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 277, in build
+    changes['commands'] = CommandTool().apply(
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/command_tool.py", line 127, in apply
+    raise ToolError(u"Command %s failed" % name)
+cfnbootstrap.construction_errors.ToolError: Command 04_install_requirements failed
+2024-12-01 14:55:13,504 [ERROR] -----------------------BUILD FAILED!------------------------
+2024-12-01 14:55:13,504 [ERROR] Unhandled exception during build: Command 04_install_requirements failed
+Traceback (most recent call last):
+  File "/opt/aws/bin/cfn-init", line 181, in <module>
+    worklog.build(metadata, configSets, strict_mode)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 137, in build
+    Contractor(metadata, strict_mode).build(configSets, self)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 567, in build
+    self.run_config(config, worklog)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 579, in run_config
+    CloudFormationCarpenter(config, self._auth_config, self.strict_mode).build(worklog)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 277, in build
+    changes['commands'] = CommandTool().apply(
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/command_tool.py", line 127, in apply
+    raise ToolError(u"Command %s failed" % name)
+cfnbootstrap.construction_errors.ToolError: Command 04_install_requirements failed
+2024-12-01 14:56:59,759 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:56:59,764 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 14:56:59,767 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 14:56:59,770 [INFO] Running config prebuild_0_genas
+2024-12-01 14:56:59,779 [INFO] Running config prebuild_1_genas
+2024-12-01 14:57:07,891 [INFO] Yum installed ['git']
+2024-12-01 14:57:10,976 [ERROR] Command 01_upgrade_pip (python3 -m pip install --upgrade pip setuptools wheel) failed
+2024-12-01 14:57:10,976 [INFO] ignoreErrors set to true, continuing build
+2024-12-01 14:57:10,982 [INFO] Running config prebuild_2_genas
+2024-12-01 14:57:10,994 [INFO] Running config prebuild_3_genas
+2024-12-01 14:57:10,996 [INFO] ConfigSets completed
+2024-12-01 14:57:10,996 [INFO] -----------------------Build complete-----------------------
+2024-12-01 14:57:22,188 [INFO] -----------------------Starting build-----------------------
+2024-12-01 14:57:22,195 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 14:57:22,198 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 14:57:22,200 [INFO] Running config postbuild_0_genas
+2024-12-01 14:57:22,228 [INFO] Command 01_create_dirs succeeded
+2024-12-01 14:57:48,118 [ERROR] Command 02_install_requirements (python3 -m pip install -r requirements.txt --no-cache-dir) failed
+2024-12-01 14:57:48,119 [ERROR] Error encountered during build of postbuild_0_genas: Command 02_install_requirements failed
+Traceback (most recent call last):
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 579, in run_config
+    CloudFormationCarpenter(config, self._auth_config, self.strict_mode).build(worklog)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 277, in build
+    changes['commands'] = CommandTool().apply(
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/command_tool.py", line 127, in apply
+    raise ToolError(u"Command %s failed" % name)
+cfnbootstrap.construction_errors.ToolError: Command 02_install_requirements failed
+2024-12-01 14:57:48,123 [ERROR] -----------------------BUILD FAILED!------------------------
+2024-12-01 14:57:48,123 [ERROR] Unhandled exception during build: Command 02_install_requirements failed
+Traceback (most recent call last):
+  File "/opt/aws/bin/cfn-init", line 181, in <module>
+    worklog.build(metadata, configSets, strict_mode)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 137, in build
+    Contractor(metadata, strict_mode).build(configSets, self)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 567, in build
+    self.run_config(config, worklog)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 579, in run_config
+    CloudFormationCarpenter(config, self._auth_config, self.strict_mode).build(worklog)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/construction.py", line 277, in build
+    changes['commands'] = CommandTool().apply(
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/command_tool.py", line 127, in apply
+    raise ToolError(u"Command %s failed" % name)
+cfnbootstrap.construction_errors.ToolError: Command 02_install_requirements failed
+2024-12-01 15:57:13,670 [INFO] -----------------------Starting build-----------------------
+2024-12-01 15:57:13,677 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 15:57:13,680 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 15:57:13,681 [INFO] Running config prebuild_0_genas
+2024-12-01 15:57:13,689 [INFO] Running config prebuild_1_genas
+2024-12-01 15:57:17,497 [ERROR] Command 01_upgrade_pip (python3 -m pip install --upgrade pip setuptools wheel) failed
+2024-12-01 15:57:17,497 [INFO] ignoreErrors set to true, continuing build
+2024-12-01 15:57:17,501 [INFO] Running config prebuild_2_genas
+2024-12-01 15:57:17,510 [INFO] Running config prebuild_3_genas
+2024-12-01 15:57:17,512 [INFO] ConfigSets completed
+2024-12-01 15:57:17,512 [INFO] -----------------------Build complete-----------------------
+2024-12-01 15:57:27,933 [INFO] -----------------------Starting build-----------------------
+2024-12-01 15:57:27,939 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 15:57:27,941 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 15:57:27,944 [INFO] Running config postbuild_0_genas
+2024-12-01 15:57:33,037 [INFO] Command 01_pip_upgrade succeeded
+2024-12-01 15:57:33,814 [INFO] Command 02_requirements succeeded
+2024-12-01 15:57:33,827 [INFO] Command 03_create_folders succeeded
+2024-12-01 15:57:33,830 [INFO] Running config postbuild_1_genas
+2024-12-01 15:57:33,844 [INFO] Command 01_create_log_dir succeeded
+2024-12-01 15:57:33,847 [INFO] Running config postbuild_2_genas
+2024-12-01 15:57:33,858 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 15:57:33,870 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 15:57:33,871 [INFO] ConfigSets completed
+2024-12-01 15:57:33,871 [INFO] -----------------------Build complete-----------------------
+2024-12-01 15:59:20,292 [INFO] -----------------------Starting build-----------------------
+2024-12-01 15:59:20,297 [INFO] Running configSets: Infra-EmbeddedPreBuild
+2024-12-01 15:59:20,302 [INFO] Running configSet Infra-EmbeddedPreBuild
+2024-12-01 15:59:20,306 [INFO] Running config prebuild_0_genas
+2024-12-01 15:59:20,313 [INFO] Running config prebuild_1_genas
+2024-12-01 15:59:21,649 [INFO] Running config prebuild_2_genas
+2024-12-01 15:59:21,656 [INFO] Running config prebuild_3_genas
+2024-12-01 15:59:21,657 [INFO] ConfigSets completed
+2024-12-01 15:59:21,657 [INFO] -----------------------Build complete-----------------------
+2024-12-01 15:59:27,905 [INFO] -----------------------Starting build-----------------------
+2024-12-01 15:59:27,911 [INFO] Running configSets: Infra-EmbeddedPostBuild
+2024-12-01 15:59:27,914 [INFO] Running configSet Infra-EmbeddedPostBuild
+2024-12-01 15:59:27,917 [INFO] Running config postbuild_0_genas
+2024-12-01 15:59:29,052 [INFO] Command 01_pip_upgrade succeeded
+2024-12-01 15:59:29,835 [INFO] Command 02_install_requirements succeeded
+2024-12-01 15:59:29,852 [INFO] Command 03_create_folders succeeded
+2024-12-01 15:59:29,854 [INFO] Running config postbuild_1_genas
+2024-12-01 15:59:29,867 [INFO] Command 01_create_log_dir succeeded
+2024-12-01 15:59:29,870 [INFO] Running config postbuild_2_genas
+2024-12-01 15:59:29,882 [INFO] Command 01_create_upload_dir succeeded
+2024-12-01 15:59:29,895 [INFO] Command 02_create_versions_dir succeeded
+2024-12-01 15:59:29,896 [INFO] ConfigSets completed
+2024-12-01 15:59:29,896 [INFO] -----------------------Build complete-----------------------

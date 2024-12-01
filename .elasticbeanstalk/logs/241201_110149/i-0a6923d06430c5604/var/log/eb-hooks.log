@@ -1,0 +1,23 @@
+2024/12/01 11:00:49.851176 [INFO] Running command: .platform/hooks/predeploy/01_permissions.sh
+2024/12/01 11:03:12.027999 [INFO] Running command: .platform/hooks/predeploy/01_permissions.sh
+2024/12/01 11:05:03.755244 [INFO] Running command: .platform/hooks/predeploy/01_permissions.sh
+2024/12/01 13:55:15.523412 [INFO] Running command: .platform/hooks/predeploy/01_permissions.sh
+2024/12/01 13:57:22.174194 [INFO] Running command: .platform/hooks/predeploy/01_permissions.sh
+2024/12/01 14:18:08.517757 [INFO] Running command: .platform/hooks/predeploy/01_permissions.sh
+2024/12/01 14:18:12.817969 [INFO] Running command: .platform/hooks/postdeploy/01_static_files.sh
+2024/12/01 14:18:12.833384 [INFO] ln: target '/var/app/current/staticjs/': No such file or directory
+ln: target '/var/app/current/staticcss/': No such file or directory
+
+2024/12/01 14:19:13.263891 [INFO] Running command: .platform/hooks/predeploy/01_permissions.sh
+2024/12/01 14:19:17.587923 [INFO] Running command: .platform/hooks/postdeploy/01_static_files.sh
+2024/12/01 14:19:17.602313 [INFO] ln: target '/var/app/current/staticjs/': No such file or directory
+ln: target '/var/app/current/staticcss/': No such file or directory
+
+2024/12/01 14:23:36.271073 [INFO] Running command: .platform/hooks/predeploy/01_permissions.sh
+2024/12/01 14:25:02.053923 [INFO] Running command: .platform/hooks/predeploy/01_permissions.sh
+2024/12/01 14:26:25.520211 [INFO] Running command: .platform/hooks/predeploy/01_permissions.sh
+2024/12/01 14:33:28.769562 [INFO] Running command: .platform/hooks/predeploy/01_permissions.sh
+2024/12/01 14:39:51.759360 [INFO] Running command: .platform/hooks/predeploy/01_permissions.sh
+2024/12/01 14:47:12.603220 [INFO] Running command: .platform/hooks/predeploy/01_permissions.sh
+2024/12/01 15:57:33.931921 [INFO] Running command: .platform/hooks/predeploy/01_permissions.sh
+2024/12/01 15:59:29.931945 [INFO] Running command: .platform/hooks/predeploy/01_permissions.sh

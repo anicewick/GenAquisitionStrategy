@@ -28,13 +28,14 @@ documents_store.pkl
 .DS_Store
 Thumbs.db
 
-# AWS Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
-#.ebextensions/*.config
-
-# Build and deployment
-*.zip
+# Distribution / packaging
+*.egg-info/
 dist/
 build/
+
+# Elastic Beanstalk Files
+# .elasticbeanstalk/*
+# !.elasticbeanstalk/*.cfg.yml
+# !.elasticbeanstalk/*.global.yml
+# .ebextensions/*
+# .platform/*
