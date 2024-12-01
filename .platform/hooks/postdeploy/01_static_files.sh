@@ -15,7 +15,9 @@ chown -R webapp:webapp /var/app/current/uploads \
 # Set directory permissions
 chmod 755 /var/app/current/uploads \
          /var/app/current/versions \
-         /var/app/current/static
+         /var/app/current/static \
+         /var/app/current/static/css \
+         /var/app/current/static/js
 chmod 777 /tmp/genas_sessions
 
 # Ensure static files are accessible
@@ -28,3 +30,6 @@ ls -la /var/app/current/static
 ls -la /var/app/current/uploads
 ls -la /var/app/current/versions
 ls -la /tmp/genas_sessions
+
+# Ensure Nginx can access the directories
+chmod 755 /var/app/current
