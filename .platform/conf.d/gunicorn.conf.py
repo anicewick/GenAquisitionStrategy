@@ -1,6 +1,10 @@
+import multiprocessing
+
 bind = "0.0.0.0:8000"
-workers = 3
+workers = multiprocessing.cpu_count() * 2 + 1
 timeout = 300
-errorlog = "/var/log/web.stdout.log"  # Use the EB log file instead
-accesslog = "/var/log/web.stdout.log"
+errorlog = "log/gunicorn-error.log"
+accesslog = "log/gunicorn-access.log"
 loglevel = "info"
+capture_output = True
+enable_stdio_inheritance = True
