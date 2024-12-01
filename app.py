@@ -3,7 +3,7 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from io import BytesIO
 import anthropic
 import time
@@ -18,6 +18,11 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from flask_session import Session
+import tempfile
+import hashlib
+import boto3
+from botocore.exceptions import ClientError
 
 # Load environment variables
 load_dotenv()
@@ -26,6 +31,20 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'default-secret-key')  # Set a secret key for session management
 CORS(app)  # Enable CORS for all routes
+
+# Increase maximum content length to 20MB
+app.config['MAX_CONTENT_LENGTH'] = 20 * 1024 * 1024  # 20MB in bytes
+app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_FILE_DIR'] = tempfile.gettempdir()
+app.config['SESSION_FILE_THRESHOLD'] = 100  # Number of files before cleanup
+Session(app)
+
+# Ensure session directory exists
+os.makedirs(app.config['SESSION_FILE_DIR'], exist_ok=True)
+
+# Initialize session interface
+Session(app)
 
 # Default prompt for AI interactions
 DEFAULT_PROMPT = """You are an AI assistant specialized in DoD Acquisition Strategy documents. Your role is to:
@@ -43,10 +62,8 @@ SYSTEM_PROMPT = """You are an AI assistant specialized in DoD Acquisition Strate
 3. Always cite which document you're referencing in your response
 4. If relevant, suggest appropriate sections for including the information in an Acquisition Strategy"""
 
-app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['VERSIONS_FOLDER'] = 'versions'
 app.config['DOCUMENTS_STORE'] = 'documents_store.pkl'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
 # Ensure required directories exist
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -167,8 +184,12 @@ ACQUISITION_SECTIONS = [
 ]
 
 @retry(
-    stop=stop_after_attempt(6),
-    wait=wait_exponential(multiplier=1, min=4, max=30),
+    stop=stop_after_attempt(int(os.getenv('ANTHROPIC_MAX_RETRIES', 3))),
+    wait=wait_exponential(
+        multiplier=float(os.getenv('ANTHROPIC_BACKOFF_FACTOR', 2)),
+        min=4,
+        max=60
+    ),
     retry_error_callback=lambda retry_state: {'error': f'API temporarily unavailable after {retry_state.attempt_number} attempts. Please try again in a few minutes.'}
 )
 def get_claude_response(system_prompt, user_prompt):
@@ -177,6 +198,7 @@ def get_claude_response(system_prompt, user_prompt):
         print("\n=== Starting Claude API request ===")
         print(f"System prompt length: {len(system_prompt)}")
         print(f"User prompt length: {len(user_prompt)}")
+        print(f"Retry settings: max_retries={os.getenv('ANTHROPIC_MAX_RETRIES', 3)}, backoff_factor={os.getenv('ANTHROPIC_BACKOFF_FACTOR', 2)}")
         
         # Debug: Print API key status (safely)
         api_key = os.getenv('ANTHROPIC_API_KEY')
@@ -242,6 +264,50 @@ def get_claude_response(system_prompt, user_prompt):
         print(f"Error type: {type(e)}")
         raise e
 
+# S3 Configuration
+S3_BUCKET = os.getenv('S3_BUCKET_NAME', 'your-bucket-name')
+s3_client = boto3.client('s3',
+    aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
+    region_name=os.getenv('AWS_REGION', 'us-east-1')
+)
+
+def store_document_content(content, filename):
+    """Store document content in S3 and return a reference"""
+    try:
+        # Create a unique key for the document
+        content_hash = hashlib.md5(content.encode('utf-8')).hexdigest()
+        s3_key = f'documents/{content_hash}'
+        
+        # Upload to S3
+        s3_client.put_object(
+            Bucket=S3_BUCKET,
+            Key=s3_key,
+            Body=content.encode('utf-8'),
+            ContentType='text/plain'
+        )
+        
+        return content_hash
+    except Exception as e:
+        print(f"Error storing document in S3: {str(e)}")
+        raise
+
+def get_document_content(content_hash):
+    """Retrieve document content from S3"""
+    try:
+        s3_key = f'documents/{content_hash}'
+        response = s3_client.get_object(Bucket=S3_BUCKET, Key=s3_key)
+        content = response['Body'].read().decode('utf-8')
+        return content
+    except ClientError as e:
+        if e.response['Error']['Code'] == 'NoSuchKey':
+            print(f"Document not found in S3: {content_hash}")
+            return None
+        raise
+    except Exception as e:
+        print(f"Error retrieving document from S3: {str(e)}")
+        return None
+
 @app.route('/')
 def index():
     return render_template('index.html', sections=ACQUISITION_SECTIONS)
@@ -257,40 +323,42 @@ def upload_file():
         
     if file:
         try:
+            # Check file size before processing
+            file.seek(0, os.SEEK_END)
+            size = file.tell()
+            file.seek(0)
+            
+            if size > app.config['MAX_CONTENT_LENGTH']:
+                return jsonify({
+                    'error': f'File too large. Maximum size is {app.config["MAX_CONTENT_LENGTH"] // (1024 * 1024)}MB'
+                }), 413
+
             filename = secure_filename(file.filename)
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             
-            # Create upload directory if it doesn't exist
-            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-            
-            # Save the file
-            file.save(file_path)
-            
-            # Extract and store document content
-            content = extract_text_from_file(file_path)
+            # Extract text content
+            content = extract_text_from_file(file)
             if content is None:
                 return jsonify({'error': 'Could not extract text from file'}), 400
-                
-            # Store in both global dict and session
-            document_contents[filename] = content
-            if 'uploaded_documents' not in session:
-                session['uploaded_documents'] = {}
-            session['uploaded_documents'][filename] = content
             
-            # Update uploaded context in session
-            if 'uploaded_context' not in session:
-                session['uploaded_context'] = []
-            session['uploaded_context'].append(f"Document: {filename}\nContent: {content}\n")
+            # Store content in S3
+            content_hash = store_document_content(content, filename)
             
-            save_documents_store()  # Save to disk after successful upload
+            # Store only the reference in session
+            if 'document_refs' not in session:
+                session['document_refs'] = {}
+            
+            session['document_refs'][filename] = content_hash
+            session.modified = True
             
             return jsonify({
                 'message': 'File uploaded and processed successfully',
                 'filename': filename
             })
+            
         except Exception as e:
             print(f"Upload error: {str(e)}")
             return jsonify({'error': f'Error processing file: {str(e)}'}), 500
+            
     return jsonify({'error': 'Invalid file'}), 400
 
 @app.route('/save_version', methods=['POST'])
@@ -482,129 +550,97 @@ def get_required_documents():
 def chat():
     try:
         data = request.get_json()
-        if not data:
-            return jsonify({'error': 'No data received'}), 400
-
-        message = data.get('message', '')
-        include_sections = data.get('includeSections', False)
-        current_content = data.get('currentContent', {})
-        include_documents = data.get('includeDocuments', True)
-        uploaded_documents = data.get('uploadedDocuments', [])
-        prompt_id = data.get('promptId', '')
-
-        print('Received chat request:', {
-            'messageLength': len(message),
-            'includeSections': include_sections,
-            'includeDocuments': include_documents,
-            'uploadedDocs': uploaded_documents,
-            'numSections': len(current_content),
-            'sectionNames': list(current_content.keys()),
-            'promptId': prompt_id
-        })
-
-        if not message:
-            return jsonify({'error': 'No message provided'}), 400
-
-        # Get target section from prompt if available
-        target_section = None
-        if prompt_id:
-            prompts = load_prompts()
-            for prompt in prompts.get('prompts', []):
-                if prompt.get('id') == prompt_id:
-                    target_section = prompt.get('targetSection')
-                    break
-            print('Found target section from prompt:', target_section)
-
-        # Prepare context for AI
-        context = []
         
-        # Add uploaded document context if available
-        if include_documents and uploaded_documents:
-            print(f"Processing {len(uploaded_documents)} uploaded documents")
-            for filename in uploaded_documents:
-                if filename in document_contents:
-                    content = document_contents[filename]
-                    context.append(f"Document: {filename}\nContent: {content}\n")
-                    print(f"Added context from {filename} (length: {len(content)})")
-                else:
-                    print(f"Warning: Document {filename} not found in document_contents")
-
-        # Add current document sections if requested
-        if include_sections and current_content:
-            section_context = []
-            for section_name, content in current_content.items():
-                if content and content.strip():
-                    section_context.append(f"Section: {section_name}\nContent: {content}\n")
+        if not data or 'message' not in data:
+            return jsonify({'error': 'No message provided'}), 400
             
-            if section_context:
-                context.extend(section_context)
-                print('Added section context:', {
-                    'numSections': len(section_context),
-                    'sections': list(current_content.keys())
-                })
-
-        # Get prompt template
-        prompt_template = session.get('current_prompt', DEFAULT_PROMPT)
-        print('Using prompt template:', prompt_template[:100] + '...' if len(prompt_template) > 100 else prompt_template)
-
-        # Combine all context
-        full_context = '\n\n'.join(context) if context else ''
-        print('Final context stats:', {
-            'hasContext': bool(full_context),
-            'contextLength': len(full_context),
-            'numContextItems': len(context)
-        })
-
-        # Call AI API
-        try:
-            print("Calling Claude API with context length:", len(full_context))
-
-            # Prepare the prompt with clear instructions
-            user_prompt = f"""I have provided the following documents and sections for reference:
-
-{full_context}
-
-Based on this information, please answer the following question:
-{message}
-
-Remember to:
-1. Reference specific documents and sections in your response
-2. Quote relevant passages when appropriate
-3. If the information would fit in an Acquisition Strategy, suggest the relevant section"""
-
-            response = get_claude_response(SYSTEM_PROMPT, user_prompt)
-            print('AI response received:', {
-                'responseLength': len(response),
-                'preview': response[:100] + '...' if len(response) > 100 else response
-            })
+        message = data['message']
+        
+        # Check if we have any documents loaded
+        if 'document_refs' not in session or not session['document_refs']:
+            return jsonify({'error': 'No documents loaded. Please upload documents first.'}), 400
             
-            if not response:
-                return jsonify({'error': 'Empty response from AI'}), 500
-
-            # Try to identify suggested section if not already set from prompt
-            suggested_section = target_section
-            if not suggested_section:
-                response_text = str(response)
-                for section in ACQUISITION_SECTIONS:
-                    if section.lower() in response_text.lower():
-                        suggested_section = section
-                        break
-
-            response_data = {
-                'response': response,
-                'targetSection': target_section,
-                'suggestedSection': suggested_section
-            }
-
-            return jsonify(response_data)
-
-        except Exception as e:
-            print('Error calling AI API:', str(e))
-            return jsonify({'error': f'AI API error: {str(e)}'}), 500
-
+        # Prepare system message with loaded documents
+        documents_context = []
+        failed_docs = []
+        
+        for filename, content_hash in session['document_refs'].items():
+            content = get_document_content(content_hash)
+            if content:
+                documents_context.append(f"Document: {filename}\nContent: {content}")
+            else:
+                failed_docs.append(filename)
+        
+        if failed_docs:
+            print(f"Failed to retrieve these documents: {', '.join(failed_docs)}")
+            
+        if not documents_context:
+            return jsonify({'error': 'Could not retrieve document contents. Please try uploading again.'}), 500
+            
+        documents_text = "\n\n".join(documents_context)
+        
+        # Initialize retry parameters
+        max_retries = 3
+        base_delay = 5
+        
+        for attempt in range(max_retries):
+            try:
+                messages = [
+                    {
+                        "role": "system",
+                        "content": f"You are a helpful AI assistant. Here are the documents to reference:\n\n{documents_text}"
+                    },
+                    {
+                        "role": "user",
+                        "content": message
+                    }
+                ]
+                
+                if 'conversation_history' in session:
+                    messages[1:1] = session['conversation_history']
+                
+                response = client.messages.create(
+                    model=os.getenv('MODEL_NAME', "claude-2"),
+                    max_tokens=int(os.getenv('MAX_TOKENS', 100000)),
+                    temperature=float(os.getenv('TEMPERATURE', 0.7)),
+                    messages=messages
+                )
+                
+                if 'conversation_history' not in session:
+                    session['conversation_history'] = []
+                    
+                session['conversation_history'].extend([
+                    {"role": "user", "content": message},
+                    {"role": "assistant", "content": response.content[0].text}
+                ])
+                
+                if len(session['conversation_history']) > 10:
+                    session['conversation_history'] = session['conversation_history'][-10:]
+                    
+                session.modified = True
+                
+                return jsonify({'response': response.content[0].text})
+                
+            except anthropic.RateLimitError as e:
+                if attempt == max_retries - 1:
+                    print(f"Rate limit error after {max_retries} attempts: {str(e)}")
+                    return jsonify({
+                        'error': 'Rate limit exceeded. Please try again in about an hour.',
+                        'retry_after': '3600'
+                    }), 429
+                    
+                delay = base_delay * (2 ** attempt)
+                print(f"Rate limit hit, attempt {attempt + 1}/{max_retries}. Waiting {delay} seconds...")
+                time.sleep(delay)
+                continue
+                
+            except Exception as e:
+                print(f"Error in chat: {str(e)}")
+                return jsonify({'error': f'An error occurred: {str(e)}'}), 500
+                
     except Exception as e:
-        print('Error in chat endpoint:', str(e))
-        return jsonify({'error': f'Server error: {str(e)}'}), 500
+        print(f"Error processing request: {str(e)}")
+        return jsonify({'error': f'An error occurred: {str(e)}'}), 500
 
 @app.route('/print_document', methods=['POST'])
 def print_document():
