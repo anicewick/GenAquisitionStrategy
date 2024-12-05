@@ -268,8 +268,26 @@ function initializeChat() {
                 buttonGroup.appendChild(loadButton);
             }
 
+            // Add append mode checkbox
+            const checkboxWrapper = document.createElement('div');
+            checkboxWrapper.className = 'checkbox-wrapper mt-2';
+            
+            const appendCheckbox = document.createElement('input');
+            appendCheckbox.type = 'checkbox';
+            appendCheckbox.id = `append-mode-${Date.now()}`; // Unique ID for each message
+            appendCheckbox.checked = true;
+            
+            const appendLabel = document.createElement('label');
+            appendLabel.htmlFor = appendCheckbox.id;
+            appendLabel.textContent = 'Append to section (uncheck to overwrite)';
+            
+            checkboxWrapper.appendChild(appendCheckbox);
+            checkboxWrapper.appendChild(appendLabel);
+
             // Add button group to actions div
             actionsDiv.appendChild(buttonGroup);
+            // Add checkbox wrapper after buttons
+            actionsDiv.appendChild(checkboxWrapper);
 
             // Add actions div to message
             messageDiv.appendChild(actionsDiv);
@@ -403,11 +421,6 @@ function initializeChat() {
             };
             
             appendMessage(messageObject, false);
-
-            // If there's a target section specified, automatically load the response into it
-            if (data.targetSection) {
-                loadResponseIntoSection(data.response, data.targetSection);
-            }
 
             // Clear input
             chatInput.value = '';
@@ -903,7 +916,7 @@ function initializeVersionControl() {
                     textarea.disabled = false;
                     textarea.readOnly = false;
                     
-                    // Trigger input event for height adjustment
+                    // Trigger input event to adjust height
                     const inputEvent = new Event('input');
                     textarea.dispatchEvent(inputEvent);
                 } else {
@@ -982,8 +995,35 @@ function loadResponseIntoSection(message, sectionName) {
             throw new Error('Textarea not found in section');
         }
         
+        // Find the append mode checkbox in the message's actions
+        let messageElement = null;
+        if (typeof message === 'object') {
+            // Find the message by looking through all chat messages and checking button text
+            const messages = document.querySelectorAll('.chat-message');
+            for (const msg of messages) {
+                const button = msg.querySelector(`button[onclick*="${sectionName}"]`);
+                if (button) {
+                    messageElement = msg;
+                    break;
+                }
+            }
+        } else {
+            // If no specific message object, use the last chat message
+            messageElement = document.querySelector('.chat-message:last-child');
+        }
+            
+        const appendMode = messageElement ? 
+            messageElement.querySelector('input[type="checkbox"]').checked : 
+            true; // Default to append if checkbox not found
+        
         // Update the content
-        textarea.value = responseText;
+        if (appendMode && textarea.value.trim()) {
+            // If appending and there's existing content, add two newlines before the new content
+            textarea.value = textarea.value.trim() + '\n\n' + responseText;
+        } else {
+            // If overwriting or no existing content, just set the value
+            textarea.value = responseText;
+        }
         
         // Ensure textarea is enabled and focused
         textarea.disabled = false;
@@ -994,7 +1034,8 @@ function loadResponseIntoSection(message, sectionName) {
         textarea.dispatchEvent(inputEvent);
         
         // Show success message
-        showSuccess(`Content loaded into ${sectionName}`);
+        const mode = appendMode ? 'appended to' : 'loaded into';
+        showSuccess(`Content ${mode} ${sectionName}`);
         
         // Expand the section
         const collapse = new bootstrap.Collapse(targetSection.querySelector('.accordion-collapse'));
@@ -1343,6 +1384,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (chatTab) {
             chatTab.addEventListener('shown.bs.tab', loadPromptRepository);
         }
+    }
+    
+    // Initialize append mode checkbox
+    const appendModeCheckbox = document.getElementById('append-mode');
+    if (appendModeCheckbox) {
+        console.log('Append mode checkbox initialized');
+    } else {
+        console.warn('Append mode checkbox not found in DOM');
     }
     
     console.log('Application initialization complete');

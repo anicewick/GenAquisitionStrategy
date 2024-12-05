@@ -171,6 +171,72 @@ textarea {
     opacity: 0.7;
 }
 
+.chat-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 0;
+    padding: 5px;
+    background-color: var(--background-color);
+    border-radius: 4px;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.checkbox-wrapper label {
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.message-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.message-actions .btn-group {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.message-actions .checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 4px 8px;
+    background-color: var(--background-color);
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+.message-actions .checkbox-wrapper input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.message-actions .checkbox-wrapper label {
+    font-size: 14px;
+    color: var(--text-color);
+    cursor: pointer;
+    user-select: none;
+}
+
 .notification {
     position: fixed;
     top: 20px;
@@ -188,12 +254,6 @@ textarea {
 
 .notification.error {
     background-color: var(--error-color);
-}
-
-.checkbox-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 5px;
 }
 
 #versionsList {
