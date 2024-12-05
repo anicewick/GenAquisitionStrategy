@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DoD Acquisition Strategy Document</title>
+    <style>
+        @page {
+            size: letter;
+            margin: 2.54cm;
+            @top-center {
+                content: "DoD Acquisition Strategy Document";
+                font-family: Arial, sans-serif;
+                font-size: 10pt;
+            }
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-family: Arial, sans-serif;
+                font-size: 10pt;
+            }
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12pt;
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 2cm;
+        }
+        .header h1 {
+            font-size: 18pt;
+            margin-bottom: 0.5cm;
+        }
+        .header h2 {
+            font-size: 16pt;
+            margin-bottom: 0.5cm;
+        }
+        .header .date {
+            font-size: 12pt;
+        }
+        .section {
+            margin-bottom: 1cm;
+            page-break-inside: avoid;
+        }
+        .section-title {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 0.5cm;
+            color: #000080;
+        }
+        .section-content {
+            text-align: justify;
+            white-space: pre-wrap;
+        }
+        .footer {
+            position: running(footer);
+            text-align: right;
+            font-size: 10pt;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Department of Defense</h1>
+        <h2>Acquisition Strategy Document</h2>
+        <div class="date">Generated on: {{ content.timestamp | default(now()) }}</div>
+    </div>
+
+    {% for section in content.sections %}
+    <div class="section">
+        <div class="section-title">{{ section.title }}</div>
+        <div class="section-content">{{ section.content }}</div>
+    </div>
+    {% endfor %}
+</body>
+</html>

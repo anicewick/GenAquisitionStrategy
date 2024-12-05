@@ -1,0 +1,151 @@
+{
+    "prompts": [	
+        {
+            "id": "collect_in_info",
+            "name": "Collect Information In Scratch Pad - 5 Questions",
+            "prompt": "You are a DoD Acquisition specialist with 20 years of experience. Your task is to help me create an acquisition strategy. To optimize your responses, ask 5 questions and collect as much information as possible. Do not repeat question already listed in documents. These question should not be available in the attached documents. Then, make a note that the question should be loaded into the Scratch Pad and answered there.",
+            "category": "Step 01: Load Scratch Pad with General Info",
+            "targetSection": "Scratch Pad"
+        },
+        {
+            "id": "collect_in_info",
+            "name": "Collect Information In Scratch Pad - 20 Questions",
+            "prompt": "You are a DoD Acquisition specialist with 20 years of experience. Your task is to help me create an acquisition strategy. To optimize your responses, ask 20 questions and collect as much information as possible. Do not repeat question already listed in documents. Included in the question list should be questions about the author of the acquisition strategy, what other contacts are involved, and other information. These question should not be available in the attached documents. Then, make a note that the question should be loaded into the Scratch Pad and answered there.",
+            "category": "Step 01: Load Scratch Pad with General Info",
+            "targetSection": "Scratch Pad"
+        },
+        {
+            "id": "collect_in_info2",
+            "name": "Collect User Info - one at a time (Not Working)",
+            "prompt": "You are a DoD Acquisition specialist with 20 years of experience. You are not looking at the documents, but instead your task is to collect informaiton about the Aqusistion strategy by asking me a series of questions. This should include questions about the author, the timeframe, and the cost, as well as anything else that a DoD Acquisition specialist deems important",
+            "category": "Step 01: Load Scratch Pad with General Info",
+            "targetSection": "Scratch Pad"
+        },
+        {
+            "id": "update_purpose_from_cdd",
+            "name": "Update Program Overview (Naming CDD & ICD)",
+            "prompt": "Based on the provided CDD (Capability Development Document) and ICD (Initial Capabilities Document), please review and update the existing purpose statement for the acquisition strategy. Consider:\n1. Any refined or updated capability requirements\n2. Changes in mission needs or operational context\n3. Updated performance parameters or thresholds\n\nPlease format the response as a well-structured paragraph that builds upon and refines the existing content in Section 1.1 of the Acquisition Strategy.",
+            "category": "Step 02: Program Overview",
+            "targetSection": "Program Overview"
+        },
+        {
+            "id": "update_program_overview",
+            "name": "Update Program Overview",
+            "prompt": "Please review the attached documents and develop a skeleton outline for the 'Program Overview' section of a DoD Acquisition Strategy. The skeleton should include major sections, subsections, and brief descriptions of the content expected under each. Ensure the outline captures key program aspects such as objectives, scope, stakeholders, milestones, funding requirements, and alignment with overarching DoD goals. Tailor the structure to reflect any unique considerations or requirements evident in the attached documents. The outline should be logically organized and actionable, including placeholders for specific data or analysis as necessary.",
+            "category": "Step 02: Program Overview",
+            "targetSection": "Program Overview"
+        },
+        {
+            "id": "update_risk_assessment",
+            "name": "Update Risk Assessment",
+            "prompt": "Please analyze the program's current risk profile and update the risk assessment section. Consider:\n1. Technical risks (engineering, technology readiness, integration)\n2. Schedule risks (dependencies, critical path items)\n3. Cost risks (estimates, funding stability)\n4. Performance risks (requirements, testing)\n5. Supply chain and industrial base risks\n\nFor each identified risk:\n- Assess probability and impact\n- Propose specific mitigation strategies\n- Identify risk owners and tracking methods\n- Consider interdependencies between risks\n\nFormat the response as a structured assessment with clear categorization and actionable mitigation steps.",
+            "category": "Step 03: Risk Assessment",
+            "targetSection": "Risk Assessment"
+        },
+        {
+            "id": "Propose_Vendors",
+            "name": "Update Market Research",
+            "prompt": "Based on the program requirements and objectives outlined in the attached documents, please provide a comprehensive market research analysis. Include:\n\n1. Identification of potential vendors/contractors\n2. Assessment of their capabilities and past performance\n3. Market conditions and trends\n4. Small business considerations\n5. Industrial base capabilities and limitations\n\nFormat the response as a structured analysis with clear recommendations and supporting rationale.",
+            "category": "Step 04: Market Research",
+            "targetSection": "Market Research"
+        },
+        {
+            "id": "update_competition_Strategy",
+            "name": "Update Competition Strategy",
+            "prompt": "Please review the attached documents and create a skeleton outline for a Competition Strategy as part of a DoD Acquisition Strategy. The skeleton should include major sections, subsections, and brief descriptions of the content expected under each. Structure the outline to align with DoD guidance and best practices for fostering competition in acquisitions.",
+            "category": "Step 05: Competition Strategy",
+            "targetSection": "Competition Strategy"
+        },
+        {
+            "id": "update_Source_Selection_Planning",
+            "name": "Update Source Selection Planning",
+            "prompt": "Please review the attached documents and create a detailed skeleton for the Source Selection Planning section of a DoD Acquisition Strategy. The skeleton should be comprehensive and structured to include major sections, subsections, and brief descriptions of the content required for each. Ensure alignment with DoD guidance and best practices for source selection. Include the following elements as a starting point: \n\n1. **Introduction**\n   - Purpose and Objectives of Source Selection\n   - Alignment with Overall Acquisition Strategy\n\n2. **Source Selection Approach**\n   - Best Value Continuum (Tradeoff vs. LPTA)\n   - Rationale for Approach Selection\n\n3. **Evaluation Criteria**\n   - Key Factors and Subfactors (e.g., Technical, Cost/Price, Past Performance)\n   - Weighting and Prioritization\n   - Minimum Acceptability Standards\n\n4. **Evaluation Process**\n   - Proposal Receipt and Initial Screening\n   - Technical and Cost Evaluations\n   - Use of Advisory Panels and Committees\n\n5. **Source Selection Organization**\n   - Roles and Responsibilities\n   - Composition of Source Selection Team (SST)\n   - Training and Conflict of Interest Mitigation\n\n6. **Documentation and Reporting**\n   - Requirements for Recordkeeping\n   - Source Selection Decision Document (SSDD)\n   - Transparency and Audit Readiness\n\n7. **Risk Mitigation**\n   - Addressing Potential Conflicts\n   - Strategies for Unforeseen Challenges\n   - Contingency Planning\n\n8. **Conclusion**\n   - Summary of Key Points\n   - Next Steps for Implementation\n\nEnsure that the outline accounts for specific considerations or requirements highlighted in the attached documents and includes DoD-specific terminology and compliance aspects. Provide enough detail for each section to guide further development of the Source Selection Planning section.",
+            "category": "Step 06: Source Selection Planning",
+            "targetSection": "Source Selection Planning"
+        },
+        {
+            "id": "update_business_considerations",
+            "name": "Update Business Considerations",
+            "prompt": "Please review the attached documents and analyze the business considerations for this acquisition program. Include:\n\n1. Cost estimates and funding profile\n2. Contract strategy and incentive structure\n3. Small business participation goals and approach\n4. Industry engagement strategy\n5. Long-term sustainment considerations\n\nProvide specific recommendations for optimizing the business approach while maintaining program objectives and managing risk.",
+            "category": "Step 07: Business Considerations",
+            "targetSection": "Business Considerations"
+        },
+        {
+            "id": "update_contract_types",
+            "name": "Update Contract Types",
+            "prompt": "Please review the attached documents and develop a skeleton outline for the 'Determination of Contract Types' section of a DoD Acquisition Strategy. The outline should include major sections, subsections, and brief descriptions of the expected content. Ensure the structure aligns with DoD policies and acquisition best practices. Address key elements such as the rationale for selecting specific contract types, considerations for fixed-price versus cost-reimbursement contracts, risk allocation, incentive structures, and compliance with statutory and regulatory requirements. Tailor the outline to reflect any unique factors or requirements evident in the attached documents, and include placeholders for necessary data or analysis.",
+            "category": "Step 08: Contract Types",
+            "targetSection": "Contract Types"
+        },
+        {
+            "id": "update_sustainment_strategy",
+            "name": "Update Sustainment Strategy",
+            "prompt": "Please review the attached documents and develop a comprehensive sustainment strategy outline. Include:\n\n1. Maintenance and support concepts\n2. Performance-based logistics considerations\n3. Supply chain management approach\n4. Technical data and intellectual property strategy\n5. Life cycle cost estimates and optimization\n\nEnsure the strategy aligns with program objectives and operational requirements while optimizing total ownership costs.",
+            "category": "Step 09: Sustainment Strategy",
+            "targetSection": "Sustainment Strategy"
+        },
+        {
+            "id": "update_source_of_support",
+            "name": "Update Source of Support",
+            "prompt": "Please review the attached documents and develop a skeleton outline for the 'Source of Support' section of a DoD Acquisition Strategy. The skeleton should include major sections, subsections, and brief descriptions of the content expected under each. Ensure the outline addresses key elements such as the identification of required support, potential sources (government, contractor, or hybrid), sustainment considerations, and alignment with mission objectives. Tailor the outline to reflect any unique factors or requirements evident in the attached documents. Include placeholders for detailed analysis and data where applicable, ensuring the structure is comprehensive and actionable.",
+            "category": "Step 10: Source of Support",
+            "targetSection": "Source of Support"
+        },
+        {
+            "id": "update_make_or_buy_program",
+            "name": "Update Make or Buy Program",
+            "prompt": "Please review the attached documents and develop a skeleton outline for the 'Make or Buy Program' section of a DoD Acquisition Strategy. The skeleton should include major sections, subsections, and brief descriptions of the content expected under each. Address key considerations such as cost-benefit analysis, capability gaps, manufacturing feasibility, and risks associated with making or buying. Ensure the outline adheres to DoD policies and acquisition best practices. Highlight any specific factors or requirements evident in the attached documents and include placeholders for supporting data and analysis where applicable. The outline should be clear, logically organized, and actionable.",
+            "category": "Step 11: Make or Buy Program",
+            "targetSection": "Make or Buy Program"
+        },
+        {
+            "id": "update_multiyear_procurement",
+            "name": "Update Multi-Year Procurement",
+            "prompt": "Please review the attached documents and determine if this should be a Multi-Year Procurement",
+            "category": "Step 12: Multi-Year Procurement",
+            "targetSection": "Multi-Year Procurement"
+        },
+        {
+            "id": "update_lease_purchase_analysis",
+            "name": "Update Lease-Purchase Analysis",
+            "prompt": "Please review the attached documents and document advantages and disadvantages of lease vs. buy for this acquisition",
+            "category": "Step 13: Lease-Purchase Analysis",
+            "targetSection": "Lease-Purchase Analysis"
+        },
+        {
+            "id": "update_security_considerations",
+            "name": "Update Security Considerations",
+            "prompt": "Please review the attached documents and develop a skeleton outline for the 'Security Considerations' section of a DoD Acquisition Strategy. The skeleton should include major sections, subsections, and brief descriptions of the content expected under each. Ensure the outline reflects DoD policies and best practices, addressing key security aspects such as cybersecurity, physical security, information assurance, and supply chain risks. Tailor the outline to the context and requirements evident in the attached documents, and provide placeholders for relevant data or analysis where necessary. The structure should be clear, comprehensive, and actionable.",
+            "category": "Step 14: Security Considerations",
+            "targetSection": "Security Considerations"
+        },
+        {
+            "id": "update_environmental_considerations",
+            "name": "Update Environmental Considerations",
+            "prompt": "Please review the attached documents and note Environmental Considerations",
+            "category": "Step 15: Environmental Considerations",
+            "targetSection": "Environmental Considerations"
+        },
+        {
+            "id": "update_supporting_documents",
+            "name": "Update Supporting Documents",
+            "prompt": "list the required supporting documents",
+            "category": "Step 16: Supporting Documents",
+            "targetSection": "Supporting Documents"
+        },
+        {
+            "id": "update_executive_summary",
+            "name": "Update Executive Summary",
+            "prompt": "Review document and create executive summary",
+            "category": "Step 17: Executive Summary",
+            "targetSection": "Executive Summary"
+        },
+        {
+            "id": "score_strategy",
+            "name": "Score Aqusistion Strategy",
+            "prompt": "Review each section of the document and provide a letter grade, then provide a letter grade for the overall document",
+            "category": "Step 18: Scrore",
+            "targetSection": "Scratch Pad"
+        }
+    ]
+}

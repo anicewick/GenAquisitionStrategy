@@ -1,0 +1,15 @@
+[Unit]
+Description=GenAS Application Service
+After=network.target
+
+[Service]
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/genas
+Environment="PATH=/home/ubuntu/genas/venv/bin"
+Environment="PYTHONPATH=/home/ubuntu/genas"
+ExecStart=/home/ubuntu/genas/venv/bin/gunicorn --workers 3 --bind unix:/home/ubuntu/genas/genas.sock -m 007 app:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

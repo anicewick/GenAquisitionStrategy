@@ -1,32 +1,25 @@
 {
     "prompts": [	
         {
-            "id": "collect_in_info",
+            "id": "collect_in_info1",
             "name": "Collect Information In Scratch Pad - 5 Questions",
             "prompt": "You are a DoD Acquisition specialist with 20 years of experience. Your task is to help me create an acquisition strategy. To optimize your responses, ask 5 questions and collect as much information as possible. Do not repeat question already listed in documents. These question should not be available in the attached documents. Then, make a note that the question should be loaded into the Scratch Pad and answered there.",
             "category": "Step 01: Load Scratch Pad with General Info",
             "targetSection": "Scratch Pad"
         },
         {
-            "id": "collect_in_info",
-            "name": "Collect Information In Scratch Pad - 20 Questions",
-            "prompt": "You are a DoD Acquisition specialist with 20 years of experience. Your task is to help me create an acquisition strategy. To optimize your responses, ask 20 questions and collect as much information as possible. Do not repeat question already listed in documents. Included in the question list should be questions about the author of the acquisition strategy, what other contacts are involved, and other information. These question should not be available in the attached documents. Then, make a note that the question should be loaded into the Scratch Pad and answered there.",
-            "category": "Step 01: Load Scratch Pad with General Info",
-            "targetSection": "Scratch Pad"
-        },
-        {
             "id": "collect_in_info2",
-            "name": "Collect User Info - one at a time (Not Working)",
-            "prompt": "You are a DoD Acquisition specialist with 20 years of experience. You are not looking at the documents, but instead your task is to collect informaiton about the Aqusistion strategy by asking me a series of questions. This should include questions about the author, the timeframe, and the cost, as well as anything else that a DoD Acquisition specialist deems important",
+            "name": "Collect Information In Scratch Pad about author",
+            "prompt": "The purpose of the prompt is to have the LLM write questions that the user can answer and place into the document for reference. This is intended to be used as a mean for the author to document themselves. write out the following questions, that the user can place into the scratch pad area to use as Metadata about the document. : 'What is your name?' 'What is your profession?' 'What is the Data your are building this document?' 'Who is the document for?",
             "category": "Step 01: Load Scratch Pad with General Info",
             "targetSection": "Scratch Pad"
         },
         {
-            "id": "update_purpose_from_cdd",
-            "name": "Update Program Overview (Naming CDD & ICD)",
-            "prompt": "Based on the provided CDD (Capability Development Document) and ICD (Initial Capabilities Document), please review and update the existing purpose statement for the acquisition strategy. Consider:\n1. Any refined or updated capability requirements\n2. Changes in mission needs or operational context\n3. Updated performance parameters or thresholds\n\nPlease format the response as a well-structured paragraph that builds upon and refines the existing content in Section 1.1 of the Acquisition Strategy.",
-            "category": "Step 02: Program Overview",
-            "targetSection": "Program Overview"
+            "id": "collect_in_info3",
+            "name": "List potential document resources",
+            "prompt": "Provide a list of the type of document that can be used as input into creating a new acquisition strategy",
+            "category": "Step 01: Load Scratch Pad with General Info",
+            "targetSection": "Scratch Pad"
         },
         {
             "id": "update_program_overview",
@@ -43,9 +36,16 @@
             "targetSection": "Risk Assessment"
         },
         {
-            "id": "Propose_Vendors",
+            "id": "Propose_Vendors1",
             "name": "Update Market Research",
             "prompt": "Based on the program requirements and objectives outlined in the attached documents, please provide a comprehensive market research analysis. Include:\n\n1. Identification of potential vendors/contractors\n2. Assessment of their capabilities and past performance\n3. Market conditions and trends\n4. Small business considerations\n5. Industrial base capabilities and limitations\n\nFormat the response as a structured analysis with clear recommendations and supporting rationale.",
+            "category": "Step 04: Market Research",
+            "targetSection": "Market Research"
+        },
+        {
+            "id": "Propose_Vendors2",
+            "name": "Propose Vendors",
+            "prompt": "Based on the program requirements and objectives outlined in the attached documents, propose 8 companies that can complete this task, and give each of them a letter grade based on thier internet recorded past performance.",
             "category": "Step 04: Market Research",
             "targetSection": "Market Research"
         },
@@ -144,7 +144,7 @@
             "id": "score_strategy",
             "name": "Score Aqusistion Strategy",
             "prompt": "Review each section of the document and provide a letter grade, then provide a letter grade for the overall document",
-            "category": "Step 18: Scrore",
+            "category": "Step 18: Score",
             "targetSection": "Scratch Pad"
         }
     ]

@@ -1,0 +1,39 @@
+{
+    "prompts": [	
+        {
+            "id": "collect_in_info",
+            "name": "Collect Information In Scratch Pad about author",
+            "prompt": "Ask 10 questions about the person authoring this new acqusistion strategy. Including there name, title, employment, contact information ,and what othe people are involved. If the question and answers already exist in Scatch, note that this is the case, and do not create a new set of questions. At completion, make a note that the question should be loaded into the Scratch Pad and answered there.",
+            "category": "Step 01: Load Scratch Pad with General Info",
+            "targetSection": "Scratch Pad"
+        },
+        {
+            "id": "collect_in_info2",
+            "name": "Collect User Info - one at a time (Not Working)",
+            "prompt": "You are a DoD Acquisition specialist with 20 years of experience. You are not looking at the documents, but instead your task is to collect informaiton about the Aqusistion strategy by asking me a series of questions. This should include questions about the author, the timeframe, and the cost, as well as anything else that a DoD Acquisition specialist deems important",
+            "category": "Step 01: Load Scratch Pad with General Info",
+            "targetSection": "Scratch Pad"
+        },
+        {
+            "id": "update_purpose_from_cdd",
+            "name": "Update Program Overview (Naming CDD & ICD)",
+            "prompt": "Based on the provided CDD (Capability Development Document) and ICD (Initial Capabilities Document), please review and update the existing purpose statement for the acquisition strategy. Consider:\n1. Any refined or updated capability requirements\n2. Changes in mission needs or operational context\n3. Updated performance parameters or thresholds\n\nPlease format the response as a well-structured paragraph that builds upon and refines the existing content in Section 1.1 of the Acquisition Strategy.",
+            "category": "Step 02: Program Overview",
+            "targetSection": "Program Overview"
+        },
+        {
+            "id": "update_program_overview",
+            "name": "Update Program Overview",
+            "prompt": "Please review the attached documents and develop a skeleton outline for the 'Program Overview' section of a DoD Acquisition Strategy. The skeleton should include major sections, subsections, and brief descriptions of the content expected under each. Ensure the outline captures key program elements and aligns with DoD acquisition guidelines.",
+            "category": "Step 02: Program Overview",
+            "targetSection": "Program Overview"
+        },
+        {
+            "id": "update_sustainment_strategy",
+            "name": "Update Sustainment Strategy",
+            "prompt": "Please review the attached documents and develop a comprehensive sustainment strategy outline. Include:\n\n1. Maintenance and support concepts\n2. Performance-based logistics considerations\n3. Supply chain management\n4. Technical data rights and management\n5. Training and documentation requirements\n\nProvide specific recommendations for optimizing sustainment while considering lifecycle costs and operational availability requirements.",
+            "category": "Step 09: Sustainment Strategy",
+            "targetSection": "Sustainment Strategy"
+        }
+    ]
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenAS - Acquisition Strategy Generator</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>GenAS - Acquisition Strategy Generator</h1>
+            <div class="date-display">
+                <span id="currentDate"></span>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="panel" id="documentPanel">
+                <div class="panel-header">
+                    <h2>Document</h2>
+                    <button class="collapse-toggle"><i class="fas fa-chevron-up"></i></button>
+                </div>
+                <div class="panel-content">
+                    <div class="document-controls">
+                        <button id="startNewSession" class="primary-button">New Document</button>
+                        <button id="clearChat" class="secondary-button">Clear Chat</button>
+                    </div>
+                    <div class="version-controls">
+                        <input type="text" id="versionName" placeholder="Version name...">
+                        <button id="saveVersion" class="primary-button">Save Version</button>
+                        <button id="generatePDF" class="secondary-button">Generate PDF</button>
+                    </div>
+                    <div id="versionsList"></div>
+                </div>
+            </div>
+
+            <div class="panel" id="uploadPanel">
+                <div class="panel-header">
+                    <h2>Upload Documents</h2>
+                    <button class="collapse-toggle"><i class="fas fa-chevron-up"></i></button>
+                </div>
+                <div class="panel-content">
+                    <form id="uploadForm">
+                        <input type="file" id="documentUpload" accept=".txt,.doc,.docx,.pdf">
+                        <button type="submit" class="primary-button">Upload</button>
+                    </form>
+                    <div id="fileList"></div>
+                </div>
+            </div>
+
+            <div class="panel" id="chatPanel">
+                <div class="panel-header">
+                    <h2>Chat</h2>
+                    <button class="collapse-toggle"><i class="fas fa-chevron-up"></i></button>
+                </div>
+                <div class="panel-content">
+                    <div class="chat-controls">
+                        <select id="prompt-select">
+                            <option value="">Select a prompt...</option>
+                        </select>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="include-sections" checked>
+                            <label for="include-sections">Include sections in response</label>
+                        </div>
+                    </div>
+                    <div id="chat-messages"></div>
+                    <div class="chat-input-container">
+                        <textarea id="chat-input" placeholder="Type your message here..."></textarea>
+                        <button id="send-message" class="primary-button">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel" id="documentContentPanel">
+                <div class="panel-header">
+                    <h2>Document Content</h2>
+                    <button class="collapse-toggle"><i class="fas fa-chevron-up"></i></button>
+                </div>
+                <div class="panel-content">
+                    <div id="documentContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

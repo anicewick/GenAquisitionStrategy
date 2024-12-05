@@ -1,0 +1,41 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Environment variables
+.env
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Application data
+uploads/*
+!uploads/.gitkeep
+versions/*
+!versions/.gitkeep
+documents_store.pkl
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+
+# Elastic Beanstalk Files
+# .elasticbeanstalk/*
+# !.elasticbeanstalk/*.cfg.yml
+# !.elasticbeanstalk/*.global.yml
+# .ebextensions/*
+# .platform/*

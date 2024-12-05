@@ -1,0 +1,34 @@
+{
+    "sections": [
+        {
+            "title": "Getting Started",
+            "content": "GenAS helps you create and manage DoD Acquisition Strategy documents. Start by uploading support documents into the application, and then use the AI assistance to analyze these documents and load the results into a aquisition strategy template. "
+        },
+        {
+            "title": "AI Assitant - Upload",
+            "content": "Upload and manage supporting documents like CDDs and ICDs in the upload panel. These documents will be used by the AI Assistant to generate relevant content."
+        },
+        {
+            "title": "AI Assistant - AI Assitance ChatBot",
+            "content": "Use the AI Assistant to help generate content for your document. You can enter your own prompt, or you can select a prompt from the dropdown. THe generated output can be placed into a inferred document section and edited. If no clear section exist, you can load the document into the scratch pad, and edit it there, then manually copy and paste into the section desired. Prompt templates will be loaded for you to custumize, then ask the chatbot any questions about acquisition strategy development."
+        },
+	    {
+            "title": "AI Assitant - AI Assitant",
+            "content": "Upload and manage supporting documents like CDDs and ICDs in the upload panel. These documents will be used by the AI Assistant to generate relevant content."
+        },	
+		
+        {
+            "title": "Acqusistion Strategy Dccument",
+            "content": "The full acqusistion strategy exist to be built secion at a time. "
+        },
+
+        {
+            "title": "cqusistion Strategy DOcument -Document Management",
+            "content": "Use the buttons at the top of the document panel to:\n- Save versions of your document\n- Load previous versions\n- Print your document"
+        },
+        {
+            "title": "Required Supporting Documents",
+            "content": "THe Aqussition strategy is just one document of many that is required to prepare for an acqusisition. This section list out other required document, and forecast the importance of the document, or notes it as a canaidate to request an exception"
+        }
+    ]
+}

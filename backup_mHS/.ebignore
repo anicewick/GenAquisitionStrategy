@@ -1,0 +1,11 @@
+# Ignore development and local files
+__pycache__/
+*.pyc
+.env
+.env.local
+.vscode/
+.idea/
+*.log
+uploads/
+versions/
+documents_store.pkl

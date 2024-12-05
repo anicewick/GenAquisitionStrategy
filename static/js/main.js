@@ -130,9 +130,13 @@ function handlePromptSelection() {
             }
 
             // Update the chat input with the selected prompt
-            const chatInput = document.querySelector('#chat-input');
+            const chatInput = document.querySelector('#message');  
             if (chatInput) {
                 chatInput.value = data.prompt || '';
+                // Trigger input event to adjust textarea height
+                chatInput.dispatchEvent(new Event('input'));
+            } else {
+                console.error('Could not find chat input element with id "message"');
             }
         } catch (error) {
             showError('Failed to load selected prompt');
@@ -141,287 +145,138 @@ function handlePromptSelection() {
     });
 }
 
-// Chat initialization function
+// Initialize chat functionality
 function initializeChat() {
-    console.log('Initializing chat functionality...');
-    
-    const chatInput = document.getElementById('chat-input');
-    const sendButton = document.getElementById('send-message');
-    const chatMessages = document.getElementById('chat-messages');
-    const includeSectionsCheckbox = document.getElementById('include-sections');
-    const clearChatButton = document.getElementById('clearChat');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('message');
+    const sendButton = document.getElementById('sendButton');
+    const includeSectionsCheckbox = document.getElementById('includeSections');
 
-    if (!chatInput || !sendButton || !chatMessages || !includeSectionsCheckbox) {
-        console.error('Required chat elements not found:', {
-            chatInput: !!chatInput,
-            sendButton: !!sendButton,
-            chatMessages: !!chatMessages,
-            includeSectionsCheckbox: !!includeSectionsCheckbox,
-            clearChatButton: !!clearChatButton
-        });
+    if (!chatMessages || !chatForm || !chatInput || !sendButton) {
+        console.error('Required chat elements not found');
         return;
     }
 
-    console.log('Chat elements found, setting up event listeners');
-
-    // Parse message content and extract sections
-    function parseMessageContent(message) {
-        let content = '';
-        let sections = [];
-
-        if (typeof message === 'object') {
-            content = message.response || '';
-            if (message.suggestedSection) {
-                sections.push(message.suggestedSection);
-            }
-        } else {
-            content = String(message);
-            // Look for section markers in the content
-            const sectionMatches = content.match(/Section:\s*([^\n]+)/g);
-            if (sectionMatches) {
-                sections = sectionMatches.map(match => {
-                    const section = match.replace(/Section:\s*/, '').trim();
-                    return section;
-                });
-            }
-        }
-
-        return { content, sections };
-    }
-
-    function createMessageElement(message, isUser = false, isLoading = false) {
+    function appendMessage(role, content, targetSection = null) {
         const messageDiv = document.createElement('div');
-        messageDiv.className = `chat-message ${isUser ? 'user-message' : 'assistant-message'}`;
+        messageDiv.className = `message ${role}-message`;
         
-        if (isLoading) {
-            messageDiv.classList.add('loading-message');
-        }
-
-        const contentDiv = document.createElement('div');
-        contentDiv.className = 'message-content';
-        messageDiv.appendChild(contentDiv);
-
-        if (isLoading) {
-            const loadingDiv = document.createElement('div');
-            loadingDiv.className = 'loading-animation';
-            
-            const spinner = document.createElement('div');
-            spinner.className = 'spinner-border';
-            spinner.setAttribute('role', 'status');
-            loadingDiv.appendChild(spinner);
-            
-            const textSpan = document.createElement('span');
-            textSpan.textContent = 'Processing your request...';
-            loadingDiv.appendChild(textSpan);
-            
-            contentDiv.appendChild(loadingDiv);
-        } else if (!isUser) {
-            try {
-                // Initialize markdown-it
+        if (typeof content === 'string') {
+            if (content.includes('loading')) {
+                messageDiv.innerHTML = content;
+            } else {
                 const md = new markdownit();
+                messageDiv.innerHTML = md.render(content);
                 
-                // Extract the response text from message object if needed
-                const messageText = typeof message === 'object' ? message.response : message;
-                
-                // Render the message text
-                contentDiv.innerHTML = md.render(String(messageText));
-            } catch (error) {
-                console.warn('Markdown parsing failed:', error);
-                contentDiv.textContent = typeof message === 'object' ? message.response : String(message);
-            }
-
-            // Add the content div first
-            messageDiv.appendChild(contentDiv);
-
-            // Create action buttons container
-            const actionsDiv = document.createElement('div');
-            actionsDiv.className = 'message-actions mt-3';
-
-            // Create button group
-            const buttonGroup = document.createElement('div');
-            buttonGroup.className = 'btn-group d-flex justify-content-end';
-
-            // Try to extract target section from the message
-            let targetSection = '';
-            if (typeof message === 'object' && message.suggestedSection) {
-                targetSection = message.suggestedSection;
-            } else if (typeof message === 'string') {
-                const sectionMatch = message.match(/Section:\s*([^\n]+)/);
-                if (sectionMatch) {
-                    targetSection = sectionMatch[1].trim();
+                // Add "Load into Section" button for assistant messages
+                if (role === 'assistant') {
+                    const loadButton = document.createElement('button');
+                    loadButton.className = 'btn btn-sm btn-outline-primary mt-2';
+                    loadButton.innerHTML = '<i class="bi bi-arrow-right-square"></i> Load into Section';
+                    
+                    // Create a select element for sections
+                    const sectionSelect = document.createElement('select');
+                    sectionSelect.className = 'form-select form-select-sm d-inline-block ms-2';
+                    sectionSelect.style.width = 'auto';
+                    
+                    // Add available sections
+                    const sections = ['system', 'user', 'assistant'];
+                    sections.forEach(section => {
+                        const option = document.createElement('option');
+                        option.value = section;
+                        option.textContent = section.charAt(0).toUpperCase() + section.slice(1);
+                        sectionSelect.appendChild(option);
+                    });
+                    
+                    loadButton.onclick = () => {
+                        const selectedSection = sectionSelect.value;
+                        if (selectedSection) {
+                            // Get the text content without the HTML formatting
+                            const tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = content;
+                            const textContent = tempDiv.textContent;
+                            loadResponseIntoSection(textContent, selectedSection);
+                        }
+                    };
+                    
+                    const buttonContainer = document.createElement('div');
+                    buttonContainer.className = 'mt-2';
+                    buttonContainer.appendChild(loadButton);
+                    buttonContainer.appendChild(sectionSelect);
+                    messageDiv.appendChild(buttonContainer);
                 }
             }
-
-            // Add scratch pad button
-            const scratchPadButton = document.createElement('button');
-            scratchPadButton.className = 'btn btn-sm btn-outline-secondary';
-            scratchPadButton.innerHTML = '<i class="bi bi-pencil-square"></i> Load to Scratch Pad';
-            scratchPadButton.onclick = () => loadResponseIntoSection(message, 'Scratch Pad');
-            buttonGroup.appendChild(scratchPadButton);
-
-            // Add section loading button if we have a target section
-            if (targetSection) {
-                const loadButton = document.createElement('button');
-                loadButton.className = 'btn btn-sm btn-primary ms-2';
-                loadButton.innerHTML = `<i class="bi bi-file-earmark-arrow-up"></i> Load into ${targetSection}`;
-                loadButton.onclick = () => loadResponseIntoSection(message, targetSection);
-                buttonGroup.appendChild(loadButton);
-            }
-
-            // Add button group to actions div
-            actionsDiv.appendChild(buttonGroup);
-
-            // Add actions div to message
-            messageDiv.appendChild(actionsDiv);
         } else {
-            contentDiv.textContent = message;
-            messageDiv.appendChild(contentDiv);
+            messageDiv.textContent = content;
         }
         
-        return messageDiv;
-    }
-
-    function appendMessage(message, isUser = false, isLoading = false) {
-        const messageDiv = createMessageElement(message, isUser, isLoading);
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
         return messageDiv;
     }
 
-    async function sendMessage() {
-        const message = chatInput.value.trim();
-        if (!message) {
-            showError('Please enter a message');
-            return;
-        }
-
+    async function handleChatSubmit(event) {
+        event.preventDefault();
+        
+        const messageInput = document.getElementById('message');
+        const message = messageInput.value.trim();
+        const provider = document.getElementById('llmProvider').value;
+        const promptId = document.getElementById('prompt-select')?.value;
+        
+        if (!message) return;
+        
+        // Add user message to chat
+        appendMessage('user', message);
+        messageInput.value = '';
+        
         try {
-            console.log('Sending message:', message);
-            appendMessage(message, true);
-
-            // Add loading message
-            const loadingMessage = appendMessage('', false, true);
-
-            // Get current document content
-            const currentContent = {};
-            const sections = document.querySelectorAll('#acquisitionSections .accordion-item');
-            console.log('Found sections:', sections.length);
+            // Show loading indicator
+            const loadingMessage = appendMessage('assistant', '<div class="loading">Thinking...</div>');
             
-            sections.forEach(section => {
-                const button = section.querySelector('.accordion-button');
-                const textarea = section.querySelector('.accordion-body .section-content');
-                
-                if (button && textarea) {
-                    const sectionName = button.textContent.trim();
-                    const textareaValue = textarea.value ? textarea.value.trim() : '';
-                    
-                    console.log(`Section "${sectionName}":`, {
-                        hasContent: !!textareaValue,
-                        contentLength: textareaValue.length,
-                        preview: textareaValue.substring(0, 100) + (textareaValue.length > 100 ? '...' : '')
-                    });
-                    
-                    if (textareaValue) {
-                        currentContent[sectionName] = textareaValue;
-                    }
-                }
-            });
-
-            // Get list of uploaded documents
-            const uploadedDocs = {};
-            const fileListItems = document.querySelectorAll('#fileList .list-group-item span');
-            fileListItems.forEach(item => {
-                uploadedDocs[item.textContent] = true;
-            });
-            console.log('Uploaded documents:', Object.keys(uploadedDocs));
-
-            // Get currently selected prompt
-            const promptSelect = document.querySelector('#prompt-select');
-            const selectedPromptId = promptSelect ? promptSelect.value : '';
-            console.log('Selected prompt ID:', selectedPromptId);
-
-            const requestBody = {
-                message: message,
-                includeSections: includeSectionsCheckbox.checked,
-                currentContent: currentContent,
-                includeDocuments: true,
-                uploadedDocuments: Object.keys(uploadedDocs),
-                promptId: selectedPromptId
-            };
-
-            console.log('Sending request:', {
-                includeSections: includeSectionsCheckbox.checked,
-                includeDocuments: true,
-                uploadedDocs: Object.keys(uploadedDocs),
-                contentSections: Object.keys(currentContent),
-                totalSections: Object.keys(currentContent).length,
-                promptId: selectedPromptId
-            });
-
-            const response = await fetch('/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestBody)
-            });
-
-            // Remove loading message
+            // Send message to selected LLM provider
+            const response = await window.llmInterface.sendMessageToLLM(message, provider, promptId);
+            
+            // Remove loading indicator
             loadingMessage.remove();
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            console.log('Full response data:', data);
-
-            if (data.error) {
-                console.error('Error from server:', data.error);
-                showError(data.error);
-                return;
-            }
-
-            // Create a message object that includes both response text and metadata
-            const messageObject = {
-                response: data.response,
-                suggestedSection: data.targetSection || data.suggestedSection,
-                canPropagate: true
-            };
             
-            appendMessage(messageObject, false);
-            chatInput.value = '';
-
+            // Check for error in response
+            if (response.error) {
+                throw new Error(response.error);
+            }
+            
+            // Check if response has the expected structure
+            if (!response.response) {
+                throw new Error('Invalid response format from server');
+            }
+            
+            // Display the AI's response with target section if available
+            appendMessage('assistant', response.response, response.targetSection);
+            
         } catch (error) {
-            console.error('Error:', error);
-            showError(error.message);
-            
-            // Ensure loading message is removed in case of error
-            const loadingMessages = document.querySelectorAll('.loading-message');
-            loadingMessages.forEach(msg => msg.remove());
+            console.error('Chat error:', error);
+            showError(`Failed to get response: ${error.message}`);
         }
     }
 
-    // Add event listeners
-    sendButton.addEventListener('click', sendMessage);
+    chatForm.addEventListener('submit', handleChatSubmit);
+    sendButton.addEventListener('click', handleChatSubmit);
     
     chatInput.addEventListener('keypress', function(event) {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
-            sendMessage();
+            handleChatSubmit(event);
         }
     });
-
-    // Add clear chat event listener
-    if (clearChatButton) {
-        clearChatButton.addEventListener('click', clearChat);
-    } else {
-        console.error('Clear chat button not found');
-    }
-
-    console.log('Chat initialization complete');
 }
+
+// Make clearChat function globally available
+window.clearChat = function() {
+    const chatMessages = document.getElementById('chatMessages');
+    if (chatMessages) {
+        chatMessages.innerHTML = '';
+    }
+};
 
 // File upload initialization function
 function initializeFileUpload() {
@@ -884,7 +739,7 @@ function initializeVersionControl() {
                     textarea.disabled = false;
                     textarea.readOnly = false;
                     
-                    // Trigger input event for height adjustment
+                    // Trigger input event to adjust height
                     const inputEvent = new Event('input');
                     textarea.dispatchEvent(inputEvent);
                 } else {
@@ -930,6 +785,44 @@ function initializeVersionControl() {
             }
         });
     }
+}
+
+// Initialize textareas function
+function initializeTextareas() {
+    console.log('Initializing textareas...');
+    
+    // Get all textareas with class section-content
+    const textareas = document.querySelectorAll('.section-content');
+    console.log(`Found ${textareas.length} textareas`);
+    
+    textareas.forEach(textarea => {
+        // Set initial height
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+        
+        // Add input event listener for auto-resize
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+        
+        // Add keydown event listener for tab handling
+        textarea.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                const start = this.selectionStart;
+                const end = this.selectionEnd;
+                
+                // Insert tab at cursor position
+                this.value = this.value.substring(0, start) + '\t' + this.value.substring(end);
+                
+                // Move cursor after tab
+                this.selectionStart = this.selectionEnd = start + 1;
+            }
+        });
+    });
+    
+    console.log('Textareas initialized successfully');
 }
 
 // Global function to load response into section
@@ -1010,326 +903,203 @@ function loadResponseIntoSection(message, sectionName) {
 }
 
 // Panel collapse functionality
-document.querySelectorAll('.collapse-toggle').forEach(button => {
-    button.addEventListener('click', function() {
-        const panel = this.closest('.panel');
-        const icon = this.querySelector('.bi');
-        const isVertical = button.classList.contains('vertical-collapse');
-        
-        if (panel) {
-            if (isVertical) {
-                panel.classList.toggle('collapsed-vertical');
-                // Update icon for vertical collapse
-                if (panel.classList.contains('collapsed-vertical')) {
-                    icon.classList.remove('bi-arrows-collapse');
-                    icon.classList.add('bi-arrows-expand');
-                } else {
-                    icon.classList.remove('bi-arrows-expand');
-                    icon.classList.add('bi-arrows-collapse');
-                }
-            } else {
-                panel.classList.toggle('collapsed');
-                // Update icon for horizontal collapse
-                if (panel.classList.contains('collapsed')) {
-                    icon.classList.remove('bi-arrows-collapse');
-                    icon.classList.add('bi-arrows-expand');
-                } else {
-                    icon.classList.remove('bi-arrows-expand');
-                    icon.classList.add('bi-arrows-collapse');
-                }
-            }
+function initializePanelCollapses() {
+    document.querySelectorAll('.collapse-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+            const panel = button.closest('.panel');
+            panel.classList.toggle('collapsed');
             
-            // Save panel states
-            const panelStates = {};
-            document.querySelectorAll('.panel').forEach(p => {
-                panelStates[p.id] = {
-                    collapsed: p.classList.contains('collapsed'),
-                    collapsedVertical: p.classList.contains('collapsed-vertical')
-                };
-            });
-            localStorage.setItem('panelStates', JSON.stringify(panelStates));
-            
-            // Trigger resize event for any components that need to adjust
-            window.dispatchEvent(new Event('resize'));
-        }
-    });
-});
-
-// Load saved panel states on page load
-document.addEventListener('DOMContentLoaded', () => {
-    const savedStates = localStorage.getItem('panelStates');
-    if (savedStates) {
-        const states = JSON.parse(savedStates);
-        Object.entries(states).forEach(([id, state]) => {
-            const panel = document.getElementById(id);
-            const horizontalButton = panel?.querySelector('.collapse-toggle:not(.vertical-collapse)');
-            const verticalButton = panel?.querySelector('.collapse-toggle.vertical-collapse');
-            
-            if (panel) {
-                if (state.collapsed && horizontalButton) {
-                    panel.classList.add('collapsed');
-                    const icon = horizontalButton.querySelector('.bi');
-                    if (icon) {
-                        icon.classList.remove('bi-arrows-collapse');
-                        icon.classList.add('bi-arrows-expand');
-                    }
-                }
-                if (state.collapsedVertical && verticalButton) {
-                    panel.classList.add('collapsed-vertical');
-                    const icon = verticalButton.querySelector('.bi');
-                    if (icon) {
-                        icon.classList.remove('bi-arrows-collapse');
-                        icon.classList.add('bi-arrows-expand');
-                    }
-                }
-            }
+            // Save panel state
+            const panelId = panel.id;
+            const isCollapsed = panel.classList.contains('collapsed');
+            localStorage.setItem(`panel_${panelId}_collapsed`, isCollapsed);
         });
-    }
-});
+    });
 
-// Initialize panel collapse functionality
-function initializePanelCollapse() {
-    const accordionItems = document.querySelectorAll('.accordion-item');
-    
-    accordionItems.forEach(item => {
-        const header = item.querySelector('.accordion-header');
-        const content = item.querySelector('.accordion-collapse');
-        const textarea = item.querySelector('.section-content');
-        
-        if (header && content) {
-            // When a section is opened
-            content.addEventListener('show.bs.collapse', () => {
-                // Scroll the section into view with padding
-                setTimeout(() => {
-                    const headerRect = header.getBoundingClientRect();
-                    const scrollContainer = header.closest('.document-sections');
-                    
-                    if (scrollContainer) {
-                        // Calculate if we need to scroll
-                        const containerRect = scrollContainer.getBoundingClientRect();
-                        const headerTop = headerRect.top - containerRect.top;
-                        const visibleHeight = containerRect.height;
-                        
-                        // If the header is not fully visible
-                        if (headerTop < 0 || headerTop > visibleHeight - 100) {
-                            header.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            // Add extra scroll to show some content
-                            setTimeout(() => {
-                                scrollContainer.scrollBy({ 
-                                    top: -50, // Scroll up a bit to show context
-                                    behavior: 'smooth' 
-                                });
-                            }, 100);
-                        }
-                    }
-                }, 0);
-            });
-
-            // When text is added to a section
-            if (textarea) {
-                textarea.addEventListener('input', () => {
-                    // Check if the textarea is near the bottom of the viewport
-                    const textareaRect = textarea.getBoundingClientRect();
-                    const scrollContainer = textarea.closest('.document-sections');
-                    
-                    if (scrollContainer) {
-                        const containerRect = scrollContainer.getBoundingClientRect();
-                        const bottomDistance = containerRect.bottom - textareaRect.bottom;
-                        
-                        // If less than 100px from bottom, scroll to show more
-                        if (bottomDistance < 100) {
-                            scrollContainer.scrollBy({ 
-                                top: 100, // Scroll down to show more space
-                                behavior: 'smooth' 
-                            });
-                        }
-                    }
-                });
-
-                // Adjust height based on content
-                textarea.addEventListener('input', function() {
-                    this.style.height = 'auto';
-                    this.style.height = Math.min(Math.max(this.scrollHeight, 150), 600) + 'px';
-                });
-            }
+    // Restore panel states
+    document.querySelectorAll('.panel').forEach(panel => {
+        const panelId = panel.id;
+        const isCollapsed = localStorage.getItem(`panel_${panelId}_collapsed`) === 'true';
+        if (isCollapsed) {
+            panel.classList.add('collapsed');
         }
     });
 }
 
-// Load help content from JSON
-async function loadHelpContent() {
-    try {
-        const response = await fetch('/static/help.json');
-        if (!response.ok) {
-            throw new Error('Failed to load help content');
+// Model selector functionality
+console.log('[MODEL-SELECTOR] Script loading...');
+
+class ModelSelector {
+    constructor() {
+        // Singleton pattern
+        if (ModelSelector.instance) {
+            console.log('[MODEL-SELECTOR] Instance already exists, returning existing instance');
+            return ModelSelector.instance;
         }
         
-        const helpData = await response.json();
-        const helpAccordion = document.getElementById('helpAccordion');
+        console.log('[MODEL-SELECTOR] Constructor called');
+        this.initialized = false;
+        this.currentProvider = null;
+        this.currentVersion = null;
+        this.models = null;
+        this.providerSelect = document.getElementById('modelProvider');
+        this.versionSelect = document.getElementById('modelVersion');
         
-        helpData.sections.forEach((section, index) => {
-            const sectionHtml = `
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button ${index > 0 ? 'collapsed' : ''}" 
-                                type="button" 
-                                data-bs-toggle="collapse" 
-                                data-bs-target="#helpSection${index}"
-                                aria-expanded="${index === 0}"
-                                aria-controls="helpSection${index}">
-                            ${section.title}
-                        </button>
-                    </h2>
-                    <div id="helpSection${index}" 
-                         class="accordion-collapse collapse ${index === 0 ? 'show' : ''}"
-                         data-bs-parent="#helpAccordion">
-                        <div class="accordion-body">
-                            ${section.content.replace(/\n/g, '<br>')}
-                        </div>
-                    </div>
-                </div>
-            `;
-            helpAccordion.insertAdjacentHTML('beforeend', sectionHtml);
+        ModelSelector.instance = this;
+    }
+
+    async initialize() {
+        console.log('[MODEL-SELECTOR] Initializing...');
+        
+        // Get the current model
+        fetch('/api/models/current')
+            .then(response => response.json())
+            .then(currentModel => {
+                console.log('[MODEL-SELECTOR] Current model:', currentModel);
+                this.currentProvider = currentModel.provider;
+                this.currentVersion = currentModel.version;
+            })
+            .catch(error => {
+                console.error('[MODEL-SELECTOR] Error fetching current model:', error);
+            });
+
+        // Get available models
+        fetch('/api/models')
+            .then(response => response.json())
+            .then(data => {
+                console.log('[MODEL-SELECTOR] Available models:', data);
+                // Extract the models object from the response
+                this.models = data.models || {};
+
+                // Populate provider select
+                if (this.providerSelect) {
+                    // Clear existing options
+                    this.providerSelect.innerHTML = '';
+                    
+                    // Add options for each provider
+                    Object.entries(this.models).forEach(([key, model]) => {
+                        const option = document.createElement('option');
+                        option.value = key;
+                        option.textContent = model.name;
+                        this.providerSelect.appendChild(option);
+                    });
+
+                    // Set current provider
+                    if (this.currentProvider) {
+                        this.providerSelect.value = this.currentProvider;
+                    }
+
+                    // Update versions when provider changes
+                    this.providerSelect.addEventListener('change', () => {
+                        this.updateVersions(this.providerSelect.value);
+                    });
+
+                    // Initial version population
+                    if (this.currentProvider) {
+                        this.updateVersions(this.currentProvider);
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('[MODEL-SELECTOR] Error during initialization:', error);
+            });
+    }
+
+    updateVersions(provider) {
+        if (!this.versionSelect || !this.models || !this.models[provider]) {
+            console.warn('[MODEL-SELECTOR] Cannot update versions - missing required data');
+            return;
+        }
+        
+        // Clear existing options
+        this.versionSelect.innerHTML = '';
+        
+        // Add options for each version
+        const versions = this.models[provider].versions || {};
+        Object.entries(versions).forEach(([key, version]) => {
+            const option = document.createElement('option');
+            option.value = key;
+            option.textContent = version.name;
+            this.versionSelect.appendChild(option);
         });
-        
-    } catch (error) {
-        console.error('Error loading help content:', error);
-        showError('Failed to load help content');
+
+        // Set current version or default version
+        if (provider === this.currentProvider && this.currentVersion) {
+            this.versionSelect.value = this.currentVersion;
+        } else if (this.models[provider].default_version) {
+            this.versionSelect.value = this.models[provider].default_version;
+        }
+
+        // Trigger change event to update model info
+        this.versionSelect.dispatchEvent(new Event('change'));
     }
 }
 
-// Show success message
-function showSuccess(message) {
-    const toast = new bootstrap.Toast(document.getElementById('successToast'));
-    document.getElementById('toastMessage').textContent = message;
-    toast.show();
-}
+// Initialize global objects
+window.llmInterface = window.llmInterface || {};
 
-// Show error message
-function showError(message) {
-    const toast = new bootstrap.Toast(document.getElementById('errorToast'));
-    document.getElementById('errorMessage').textContent = message;
-    toast.show();
-}
-
-// Update current date in title bar
-function updateCurrentDate() {
-    const dateElement = document.getElementById('currentDate');
-    if (dateElement) {
-        const options = { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        };
-        const currentDate = new Date().toLocaleDateString('en-US', options);
-        dateElement.textContent = currentDate;
-    }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
+// Wait for DOM to be ready
+document.addEventListener('DOMContentLoaded', async function() {
     console.log('DOM Content Loaded - Initializing application...');
     
-    // Update date immediately and set interval
+    // Add a small delay to ensure everything is ready
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // First initialize model selector
+    console.log('Initializing model selector...');
+    console.log('Checking for model select element:', document.getElementById('modelSelect'));
+    console.log('All select elements:', document.querySelectorAll('select'));
+    
+    window.modelSelector = new ModelSelector();
+    await window.modelSelector.initialize();
+    
+    // Initialize LLM interface
+    console.log('Initializing LLM interface...');
+    window.llmInterface.initializeLLMInterface();
+    
+    // Initialize UI components
+    console.log('Initializing UI components...');
     updateCurrentDate();
-    setInterval(updateCurrentDate, 60000); // Update every minute
+    setInterval(updateCurrentDate, 1000);
     
-    // Initialize Bootstrap components
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-
-    const tabElements = document.querySelectorAll('[data-bs-toggle="tab"]');
-    tabElements.forEach(tabEl => {
-        new bootstrap.Tab(tabEl);
-    });
-    
-    // Initialize all the components
+    // Initialize all components
+    console.log('Initializing application components...');
     initializeChat();
     initializeFileUpload();
     initializeDocumentManagement();
     initializeVersionControl();
-    initializePanelCollapse();
-    loadHelpContent();
-    
-    // Initialize textareas
-    function initializeTextareas() {
-        console.log('Initializing textareas...');
-        
-        // Get all textareas with class section-content
-        const textareas = document.querySelectorAll('.section-content');
-        
-        textareas.forEach(textarea => {
-            // Enable the textarea
-            textarea.disabled = false;
-            textarea.readOnly = false;
-            
-            // Auto-resize functionality
-            textarea.addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = (this.scrollHeight) + 'px';
-            });
-            
-            // Initial height adjustment
-            textarea.dispatchEvent(new Event('input'));
-        });
-        
-        console.log(`Initialized ${textareas.length} textareas`);
-    }
-
-    // Event Listeners
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (mutation.addedNodes.length) {
-                mutation.addedNodes.forEach((node) => {
-                    if (node.classList && node.classList.contains('section-content')) {
-                        node.disabled = false;
-                        node.readOnly = false;
-                    }
-                });
-            }
-        });
-    });
-
-    // Start observing the document with the configured parameters
-    observer.observe(document.body, { childList: true, subtree: true });
-    
-    // Initialize existing textareas
     initializeTextareas();
+    initializePanelCollapses();
+    loadPromptRepository();
     
-    // Initialize Clear Chat button
+    // Add event listeners
     const clearChatButton = document.getElementById('clearChat');
     if (clearChatButton) {
         clearChatButton.addEventListener('click', clearChat);
     }
     
-    // Add new session button handler
     const newSessionButton = document.getElementById('newSessionButton');
     if (newSessionButton) {
         newSessionButton.addEventListener('click', startNewSession);
     }
-
-    // Load prompts immediately
-    loadPromptRepository();
     
-    // Add event listener for prompt selection
     const promptSelect = document.getElementById('prompt-select');
     if (promptSelect) {
-        console.log('Adding change event listener to prompt select');
         handlePromptSelection();
-        
-        // Reload prompts when chat tab is shown
-        const chatTab = document.querySelector('[data-bs-toggle="tab"][data-bs-target="#chatbot"]');
-        if (chatTab) {
-            chatTab.addEventListener('shown.bs.tab', loadPromptRepository);
-        }
     }
     
-    console.log('Application initialization complete');
+    console.log('Application initialization complete.');
 });
 
-// Function to start a new session
+// Initialize Clear Chat button
+window.clearChat = function() {
+    const chatMessages = document.getElementById('chatMessages');
+    if (chatMessages) {
+        chatMessages.innerHTML = '';
+    }
+};
+
+// Add new session button handler
 async function startNewSession() {
     try {
         console.log('Starting new session...');
@@ -1370,7 +1140,7 @@ async function startNewSession() {
 // Clear chat functionality
 function clearChat() {
     console.log('Clearing chat messages...');
-    const chatMessages = document.getElementById('chat-messages');
+    const chatMessages = document.getElementById('chatMessages');
     if (chatMessages) {
         chatMessages.innerHTML = '';
         console.log('Chat messages cleared');
@@ -1378,5 +1148,34 @@ function clearChat() {
     } else {
         console.error('Chat messages container not found');
         showError('Could not clear chat history');
+    }
+}
+
+// Show success message
+function showSuccess(message) {
+    const toast = new bootstrap.Toast(document.getElementById('successToast'));
+    document.getElementById('toastMessage').textContent = message;
+    toast.show();
+}
+
+// Show error message
+function showError(message) {
+    const toast = new bootstrap.Toast(document.getElementById('errorToast'));
+    document.getElementById('errorMessage').textContent = message;
+    toast.show();
+}
+
+// Update current date in title bar
+function updateCurrentDate() {
+    const dateElement = document.getElementById('currentDate');
+    if (dateElement) {
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        };
+        const currentDate = new Date().toLocaleDateString('en-US', options);
+        dateElement.textContent = currentDate;
     }
 }

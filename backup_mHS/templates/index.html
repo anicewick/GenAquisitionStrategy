@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenAS - DoD Acquisition Strategy Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .panel .collapse-toggle .bi-arrows-collapse::before {
+            content: "\F229";  /* collapse icon */
+        }
+        .panel .collapse-toggle.collapsed .bi-arrows-collapse::before {
+            content: "\F228";  /* expand icon */
+        }
+        .panel.collapsed {
+            flex: 0 0 auto;
+            width: auto;
+        }
+        .panel .card {
+            transition: all 0.3s ease-in-out;
+        }
+        .panel .collapse {
+            transition: height 0.3s ease-in-out;
+        }
+        .collapse-toggle {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            border-radius: 0.2rem;
+        }
+        .card-header .nav-tabs {
+            margin-bottom: -0.5rem;
+        }
+        
+        /* Chat Styles */
+        .chat-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem;
+        }
+        
+        .message {
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            max-width: 85%;
+            word-wrap: break-word;
+        }
+        
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+        }
+        
+        .assistant-message {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            align-self: flex-start;
+        }
+        
+        .loading {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .loading::after {
+            content: "...";
+            animation: dots 1s steps(5, end) infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: "."; }
+            40% { content: ".."; }
+            60%, 100% { content: "..."; }
+        }
+        
+        #modelInfo {
+            cursor: help;
+        }
+        
+        #modelInfo .bi-info-circle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        #modelInfo:hover .bi-info-circle {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg mb-3">
+        <div class="container-fluid">
+            <div class="navbar-brand">
+                <span>GenAS - DoD Acquisition Strategy Generator</span>
+            </div>
+            <div class="d-flex align-items-center">
+                <select class="form-select form-select-sm me-3" id="llmProvider" style="width: auto;">
+                    <option value="claude">Claude (Anthropic)</option>
+                    <option value="openai">GPT-4 (OpenAI)</option>
+                    <option value="meta">Llama-2 (Meta)</option>
+                    <option value="google">Gemini (Google)</option>
+                </select>
+                <div class="model-info small text-white me-3" id="modelInfo"></div>
+                <span class="text-white small me-3" id="currentDate"></span>
+                <button class="btn btn-outline-success me-2" id="newSessionButton">
+                    <i class="bi bi-plus-circle"></i> New Session
+                </button>
+                <button class="btn btn-outline-primary" id="helpButton" data-bs-toggle="modal" data-bs-target="#helpModal">
+                    <i class="bi bi-question-circle"></i> Help
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row vh-100">
+            <!-- Panel 1: Document Upload and ChatBot -->
+            <div class="col-md-3 panel" id="panel1">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">AI Assistant</h5>
+                        <button class="btn btn-outline-secondary btn-sm collapse-toggle" 
+                                data-bs-toggle="collapse" 
+                                data-bs-target="#panel1Content" 
+                                aria-expanded="true" 
+                                aria-controls="panel1Content"
+                                title="Toggle visibility">
+                            <i class="bi bi-arrows-collapse"></i>
+                        </button>
+                    </div>
+                    <div id="panel1Content" class="collapse show">
+                        <div class="card-body d-flex flex-column">
+                            <div class="card-header">
+                                <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload" type="button" role="tab" aria-controls="upload" aria-selected="true">
+                                            <i class="bi bi-upload"></i> Upload
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="chatbot-tab" data-bs-toggle="tab" data-bs-target="#chatbot" type="button" role="tab" aria-controls="chatbot" aria-selected="false">
+                                            <i class="bi bi-chat-dots"></i> AI Assistant
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body tab-content">
+                                <div class="tab-pane fade show active" id="upload">
+                                    <h5 class="card-title mb-3">Document Upload</h5>
+                                    <form id="uploadForm">
+                                        <div class="mb-3">
+                                            <input type="file" class="form-control" id="documentUpload">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Upload</button>
+                                    </form>
+                                    <div id="uploadedFiles" class="mt-4">
+                                        <h6 class="mb-3">Uploaded Documents</h6>
+                                        <ul class="list-group" id="fileList">
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="chatbot">
+                                    <h5 class="card-title mb-3">AI Assistant</h5>
+                                    <div class="mb-3">
+                                        <label for="prompt-select" class="form-label">Select a Prompt Template</label>
+                                        <select class="form-select mb-3" id="prompt-select">
+                                            <option value="">Select a prompt...</option>
+                                        </select>
+                                    </div>
+                                    <div class="chat-container mb-3" style="height: 300px; overflow-y: auto;">
+                                        <div id="chatMessages" class="chat-messages">
+                                            <!-- Chat messages will be inserted here -->
+                                        </div>
+                                    </div>
+                                    <form id="chatForm" class="mt-auto">
+                                        <div class="mb-3">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <select class="form-select me-2" id="llmProvider">
+                                                    <option value="claude">Claude (Anthropic)</option>
+                                                    <option value="openai">GPT-4 (OpenAI)</option>
+                                                    <option value="meta">Llama-2 (Meta)</option>
+                                                    <option value="google">Gemini (Google)</option>
+                                                </select>
+                                                <span id="modelInfo" class="text-muted">
+                                                    <i class="bi bi-info-circle"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="includeSections" checked>
+                                            <label class="form-check-label" for="includeSections">
+                                                Include document sections in prompt
+                                            </label>
+                                        </div>
+                                        <textarea class="form-control mb-2" id="message" rows="3" 
+                                                  placeholder="Type your message here..."></textarea>
+                                        <div class="d-flex justify-content-between">
+                                            <button type="button" class="btn btn-outline-danger" id="clearChat">
+                                                <i class="bi bi-trash"></i> Clear Chat
+                                            </button>
+                                            <button type="submit" class="btn btn-primary" id="sendButton">
+                                                <i class="bi bi-send"></i> Send
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 2: Main Document -->
+            <div class="col-md-6 panel" id="panel2">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Acquisition Strategy Document</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="btn-group me-2" role="group" aria-label="Document Controls">
+                                <button class="btn btn-outline-primary btn-sm" id="saveVersion" title="Save Version">
+                                    <i class="bi bi-save"></i> Save Version
+                                </button>
+                                <button class="btn btn-outline-primary btn-sm" id="loadVersion" title="Load Version">
+                                    <i class="bi bi-clock-history"></i> Load Version
+                                </button>
+                                <button class="btn btn-outline-primary btn-sm" id="printDocument" title="Print Document">
+                                    <i class="bi bi-printer"></i> Print
+                                </button>
+                            </div>
+                            <button class="btn btn-outline-secondary btn-sm collapse-toggle" 
+                                    data-bs-toggle="collapse" 
+                                    data-bs-target="#panel2Content" 
+                                    aria-expanded="true" 
+                                    aria-controls="panel2Content"
+                                    title="Toggle visibility">
+                                <i class="bi bi-arrows-collapse"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="panel2Content" class="collapse show">
+                        <div class="card-body">
+                            <div class="accordion" id="acquisitionSections">
+                                {% for section in sections %}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                                                data-bs-target="#section{{ loop.index }}">
+                                            {{ section }}
+                                        </button>
+                                    </h2>
+                                    <div id="section{{ loop.index }}" class="accordion-collapse collapse">
+                                        <div class="accordion-body">
+                                            <textarea class="form-control section-content" 
+                                                    data-section="{{ section }}"
+                                                    style="min-height: 150px; max-height: 600px; overflow-y: auto;"
+                                                    rows="6"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 3: Required Documents -->
+            <div class="col-md-3 panel" id="panel3">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Required Supporting Documents</h5>
+                        <button class="btn btn-outline-secondary btn-sm collapse-toggle" 
+                                data-bs-toggle="collapse" 
+                                data-bs-target="#panel3Content" 
+                                aria-expanded="true" 
+                                aria-controls="panel3Content"
+                                title="Toggle visibility">
+                            <i class="bi bi-arrows-collapse"></i>
+                        </button>
+                    </div>
+                    <div id="panel3Content" class="collapse show">
+                        <div class="card-body">
+                            <div id="requiredDocuments">
+                                <!-- Documents will be populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-success text-white">
+                <strong class="me-auto">Success</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastMessage"></div>
+        </div>
+    </div>
+
+    <!-- Error Toast -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-danger text-white">
+                <strong class="me-auto">Error</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="errorMessage"></div>
+        </div>
+    </div>
+
+    <!-- Version Modal -->
+    <div class="modal fade" id="versionModal" tabindex="-1" aria-labelledby="versionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="versionModalLabel">Document Versions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="versionsList" class="list-group">
+                        <!-- Version list items will be dynamically added here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="helpModalLabel">Help Guide</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="accordion" id="helpAccordion">
+                        <!-- Help sections will be populated dynamically -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/llm-interface.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
