@@ -57,16 +57,6 @@
                 </div>
                 <div class="panel-content">
                     <div class="chat-controls">
-                        <div class="model-selector">
-                            <label for="modelSelect">AI Model:</label>
-                            <select id="modelSelect" class="form-select">
-                                <option value="" disabled selected>Select Model</option>
-                                <option value="text-davinci-003">Text Davinci 003</option>
-                                <option value="text-curie-001">Text Curie 001</option>
-                                <option value="text-babbage-001">Text Babbage 001</option>
-                                <option value="text-ada-001">Text Ada 001</option>
-                            </select>
-                        </div>
                         <select id="prompt-select">
                             <option value="">Select a prompt...</option>
                         </select>
@@ -97,10 +87,6 @@
 
     <div id="notification" class="notification"></div>
 
-    <!-- Load dependencies first -->
-    <script src="js/llm-interface.js"></script>
-    
-    <!-- Load main app last -->
     <script src="js/main.js"></script>
 </body>
 </html>

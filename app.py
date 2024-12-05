@@ -6,8 +6,6 @@ import json
 from datetime import datetime, timedelta
 from io import BytesIO
 import anthropic
-import openai
-import replicate
 import time
 from tenacity import retry, stop_after_attempt, wait_exponential
 from PyPDF2 import PdfReader
@@ -66,49 +64,8 @@ anthropic_logger = setup_logging()
 # Load environment variables
 load_dotenv()
 
-# Load models configuration
-def load_models():
-    with open('config/models.json', 'r') as f:
-        return json.load(f)
-
-# Initialize models
-MODELS = load_models()
-current_model = {
-    'provider': 'claude',
-    'version': 'claude-3-sonnet-20240229'
-}
-
-# Initialize API clients
-anthropic_client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
-openai_client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-replicate_client = replicate.Client(api_token=os.getenv("REPLICATE_API_TOKEN"))
-
-# Constants for LLM configuration
-LLM_CONFIG = {
-    'claude': {
-        'model': os.getenv('MODEL_NAME', 'claude-3-sonnet-20240229'),
-        'max_tokens': int(os.getenv('MAX_TOKENS', 8000)),
-        'temperature': float(os.getenv('TEMPERATURE', 0.7))
-    },
-    'openai': {
-        'model': 'gpt-4-turbo-preview',
-        'max_tokens': 4000,
-        'temperature': 0.7
-    },
-    'meta': {
-        'model': 'meta/llama-2-70b-chat:02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3',
-        'max_tokens': 4096,
-        'temperature': 0.7
-    },
-    'google': {
-        'model': 'gemini-pro',
-        'max_tokens': 8000,
-        'temperature': 0.7
-    }
-}
-
 # Initialize Flask app
-app = Flask(__name__, static_url_path='/static', static_folder='static')
+app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'default-secret-key')  # Set a secret key for session management
 CORS(app)  # Enable CORS for all routes
 
@@ -125,12 +82,6 @@ os.makedirs(app.config['SESSION_FILE_DIR'], exist_ok=True)
 
 # Initialize session interface
 Session(app)
-
-# Add explicit route for model-selector.js
-@app.route('/static/js/model-selector.js')
-def serve_model_selector():
-    app.logger.info('Serving model-selector.js')
-    return app.send_static_file('js/model-selector.js')
 
 # Default prompt for AI interactions
 DEFAULT_PROMPT = """You are an AI assistant specialized in DoD Acquisition Strategy documents. Your role is to:
@@ -269,97 +220,87 @@ ACQUISITION_SECTIONS = [
     "Scratch Pad"
 ]
 
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
-def get_llm_response(system_prompt, user_prompt, provider='claude'):
-    """Get response from selected LLM provider with retry logic"""
+@retry(
+    stop=stop_after_attempt(int(os.getenv('ANTHROPIC_MAX_RETRIES', 3))),
+    wait=wait_exponential(
+        multiplier=float(os.getenv('ANTHROPIC_BACKOFF_FACTOR', 2)),
+        min=4,
+        max=60
+    ),
+    retry_error_callback=lambda retry_state: {'error': f'API temporarily unavailable after {retry_state.attempt_number} attempts. Please try again in a few minutes.'}
+)
+def get_claude_response(system_prompt, user_prompt):
+    """Get response from Claude API with retry logic"""
     try:
-        if provider == 'claude':
-            try:
-                # Create a new message
-                message = anthropic_client.messages.create(
-                    model=LLM_CONFIG['claude']['model'],
-                    max_tokens=LLM_CONFIG['claude']['max_tokens'],
-                    temperature=LLM_CONFIG['claude']['temperature'],
-                    system=system_prompt,
-                    messages=[{
-                        "role": "user",
-                        "content": user_prompt
-                    }]
-                )
-                
-                # Extract the response text
-                if hasattr(message, 'content') and len(message.content) > 0:
-                    return message.content[0].text
-                else:
-                    raise ValueError("No content in Claude response")
-                
-            except Exception as e:
-                anthropic_logger.error(f"Claude API Error: {str(e)}")
-                raise
+        anthropic_logger.info("\n=== Starting Claude API request ===")
+        anthropic_logger.debug(f"System prompt: {system_prompt}")
+        anthropic_logger.debug(f"User prompt: {user_prompt}")
+        anthropic_logger.info(f"System prompt length: {len(system_prompt)}")
+        anthropic_logger.info(f"User prompt length: {len(user_prompt)}")
+        anthropic_logger.info(f"Retry settings: max_retries={os.getenv('ANTHROPIC_MAX_RETRIES', 3)}, backoff_factor={os.getenv('ANTHROPIC_BACKOFF_FACTOR', 2)}")
+        
+        # Debug: Print API key status (safely)
+        api_key = os.getenv('ANTHROPIC_API_KEY')
+        if not api_key:
+            anthropic_logger.error("ERROR: No API key found!")
+            raise Exception("Anthropic API key not found in environment variables")
+        else:
+            anthropic_logger.info(f"API key verification: {api_key[:8]}... (length: {len(api_key)})")
             
-        elif provider == 'openai':
+        try:
+            anthropic_logger.info("\nInitializing Anthropic client...")
+            client = anthropic.Client(api_key=api_key)
+            
+            anthropic_logger.info("Preparing message for Claude...")
+            model_name = os.getenv('MODEL_NAME', 'claude-2.1')
+            anthropic_logger.info(f"Using model: {model_name}")
+            anthropic_logger.info(f"Total prompt length: {len(system_prompt) + len(user_prompt)}")
+            
+            anthropic_logger.info("\nSending request to Claude API...")
             try:
-                response = openai_client.chat.completions.create(
-                    model=LLM_CONFIG['openai']['model'],
-                    max_tokens=LLM_CONFIG['openai']['max_tokens'],
-                    temperature=LLM_CONFIG['openai']['temperature'],
+                message = client.messages.create(
+                    model=model_name,
+                    max_tokens=int(os.getenv('MAX_TOKENS', 2000)),
+                    temperature=float(os.getenv('TEMPERATURE', 0.7)),
+                    system=system_prompt,
                     messages=[
-                        {"role": "system", "content": system_prompt},
-                        {"role": "user", "content": user_prompt}
+                        {
+                            "role": "user",
+                            "content": [
+                                {
+                                    "type": "text",
+                                    "text": user_prompt
+                                }
+                            ]
+                        }
                     ]
                 )
-                return response.choices[0].message.content
-            except Exception as e:
-                anthropic_logger.error(f"OpenAI API Error: {str(e)}")
+                
+                anthropic_logger.debug(f"Claude response: {message}")
+                anthropic_logger.info("=== Claude API request completed successfully ===")
+                return message
+                
+            except anthropic.APIError as api_error:
+                anthropic_logger.error(f"\nAnthropicAPI Error Details:")
+                anthropic_logger.error(f"Error Status: {api_error.status_code if hasattr(api_error, 'status_code') else 'Unknown'}")
+                anthropic_logger.error(f"Error Type: {api_error.type if hasattr(api_error, 'type') else 'Unknown'}")
+                anthropic_logger.error(f"Error Message: {str(api_error)}")
+                anthropic_logger.error(f"Full Error: {api_error.__dict__}")
                 raise
-
-        elif provider == 'meta':
-            try:
-                # Format prompt for Llama-2
-                formatted_prompt = f"""<s>[INST] <<SYS>>
-{system_prompt}
-<</SYS>>
-
-{user_prompt} [/INST]"""
-                
-                # Create Llama-2 completion using Replicate
-                output = replicate_client.run(
-                    LLM_CONFIG['meta']['model'],
-                    input={
-                        "prompt": formatted_prompt,
-                        "max_new_tokens": LLM_CONFIG['meta']['max_tokens'],
-                        "temperature": LLM_CONFIG['meta']['temperature']
-                    }
-                )
-                
-                # Combine output stream into a single string and clean it
-                response_text = ""
-                for chunk in output:
-                    if chunk is not None:
-                        response_text += str(chunk)
-                
-                # Clean up the response by removing any system prompts or instruction tags
-                response_text = response_text.replace("[/INST]", "").strip()
-                if "</s>" in response_text:
-                    response_text = response_text.split("</s>")[0].strip()
-                
-                return response_text
-                
             except Exception as e:
-                anthropic_logger.error(f"Meta API Error: {str(e)}")
+                anthropic_logger.error(f"\nUnexpected Error in API call:")
+                anthropic_logger.error(f"Error Type: {type(e)}")
+                anthropic_logger.error(f"Error Message: {str(e)}")
+                anthropic_logger.error(f"Error Details: {e.__dict__ if hasattr(e, '__dict__') else 'No details available'}")
                 raise
-            
-        elif provider == 'google':
-            # TODO: Implement Google API integration
-            return "Google API integration coming soon!"
-            
-        else:
-            raise ValueError(f"Unsupported LLM provider: {provider}")
-            
+        except Exception as e:
+            anthropic_logger.error("\n!!! General Error in get_claude_response !!!")
+            anthropic_logger.error(f"Error message: {str(e)}")
+            anthropic_logger.error(f"Error type: {type(e)}")
+            raise
     except Exception as e:
-        anthropic_logger.error(f"Error getting LLM response from {provider}: {str(e)}")
-        anthropic_logger.exception("Full traceback:")
-        raise
+        anthropic_logger.error(f"Final error in get_claude_response: {str(e)}")
+        return {'error': str(e)}
 
 @app.route('/')
 def index():
@@ -623,80 +564,121 @@ def get_required_documents():
 @app.route('/chat', methods=['POST'])
 def chat():
     try:
-        data = request.json
+        data = request.get_json()
         if not data:
             return jsonify({'error': 'No data received'}), 400
 
         message = data.get('message', '')
-        provider = data.get('provider', 'claude')
-        prompt_id = data.get('prompt_id', '')
-        include_sections = data.get('includeSections', True)
+        include_sections = data.get('includeSections', False)
+        current_content = data.get('currentContent', {})
         include_documents = data.get('includeDocuments', True)
-        
+        uploaded_documents = data.get('uploadedDocuments', [])
+        prompt_id = data.get('promptId', '')
+        target_section = data.get('targetSection', '')  # Get target section from request
+
+        print('Received chat request:', {
+            'messageLength': len(message),
+            'includeSections': include_sections,
+            'includeDocuments': include_documents,
+            'uploadedDocs': uploaded_documents,
+            'numSections': len(current_content),
+            'sectionNames': list(current_content.keys()),
+            'promptId': prompt_id,
+            'targetSection': target_section
+        })
+
         if not message:
             return jsonify({'error': 'No message provided'}), 400
 
-        # Get current document content and uploaded documents
-        current_doc = session.get('current_document', {})
-        uploaded_docs = session.get('uploaded_documents', {})
-
-        # Get target section from prompt if available
-        target_section = None
-        if prompt_id:
+        # Get target section from prompt if not provided in request
+        if not target_section and prompt_id:
             prompts = load_prompts()
             for prompt in prompts.get('prompts', []):
                 if prompt.get('id') == prompt_id:
                     target_section = prompt.get('targetSection')
                     break
+            print('Found target section from prompt:', target_section)
 
-        # Build context for the AI
-        context = []
-        
+        # Build system prompt
+        system_prompt = DEFAULT_PROMPT
+
         # Add document context
-        if include_documents and uploaded_docs:
-            context.append("=== Uploaded Documents ===")
+        document_context = []
+        if include_documents and 'uploaded_documents' in session:
+            uploaded_docs = session.get('uploaded_documents', {})
+            print(f"Found {len(uploaded_docs)} documents in session")
             for doc_name, content in uploaded_docs.items():
-                context.append(f"Document: {doc_name}\nContent: {content}\n")
+                if not uploaded_documents or doc_name in uploaded_documents:
+                    document_context.append(f"Document: {doc_name}\nContent: {content}\n")
 
         # Add section context
-        if include_sections and current_doc:
-            context.append("=== Current Document Sections ===")
-            for section, content in current_doc.items():
+        section_context = []
+        if include_sections and current_content:
+            for section, content in current_content.items():
                 if content and content.strip():
-                    context.append(f"Section: {section}\nContent: {content}\n")
+                    section_context.append(f"Section: {section}\nContent: {content}\n")
 
-        # Prepare prompts
-        system_prompt = """You are an AI assistant helping with DoD acquisition strategy documents. 
-Your task is to help create and refine acquisition strategy documents based on the provided context and user input."""
-
-        user_prompt = "\n".join([
-            "Context:",
-            *context,
-            f"\nUser Message: {message}",
-            f"\nTarget Section: {target_section}" if target_section else ""
-        ])
-
-        # Get response from selected LLM provider
-        try:
-            response = get_llm_response(system_prompt, user_prompt, provider)
-            anthropic_logger.info(f"Got response from {provider}: {response[:100]}...")
+        # Combine all context
+        user_prompt = "I have provided the following documents and sections for reference:\n\n"
+        
+        if document_context:
+            user_prompt += "=== Documents ===\n" + "\n".join(document_context) + "\n\n"
+        else:
+            print("Warning: No document context available")
             
+        if section_context:
+            user_prompt += "=== Sections ===\n" + "\n".join(section_context) + "\n\n"
+            
+        user_prompt += f"Question: {message}\n\n"
+        
+        if not document_context and not section_context:
             return jsonify({
-                'response': response,
+                'error': 'No documents or sections available. Please upload documents or provide section content first.'
+            }), 400
+
+        print(f"Generated prompt with {len(document_context)} documents and {len(section_context)} sections")
+
+        # Get response from Claude
+        try:
+            response = get_claude_response(system_prompt, user_prompt)
+            
+            if isinstance(response, dict) and 'error' in response:
+                return jsonify(response), 500
+
+            # Extract text from Claude-3 Message object
+            try:
+                # Access the text content directly from the Message object
+                if hasattr(response, 'content') and isinstance(response.content, list) and len(response.content) > 0:
+                    # Get the first content block's text
+                    first_block = response.content[0]
+                    if hasattr(first_block, 'text'):
+                        response_text = first_block.text
+                    else:
+                        response_text = str(first_block)
+                else:
+                    response_text = str(response)
+            except Exception as e:
+                print(f"Error extracting text from response: {str(e)}")
+                response_text = str(response)
+
+            # Create a simple dict with only the text
+            return jsonify({
+                'response': response_text,
+                'suggestedSection': None,
                 'targetSection': target_section
             })
+
         except Exception as e:
-            anthropic_logger.error(f"Error getting LLM response: {str(e)}")
-            return jsonify({
-                'error': f"Failed to get response from {provider}: {str(e)}"
-            }), 500
-        
+            error_msg = f"Error processing Claude response: {str(e)}"
+            print(error_msg)
+            return jsonify({'error': error_msg}), 500
+
     except Exception as e:
-        anthropic_logger.error(f"Error in chat endpoint: {str(e)}")
-        anthropic_logger.exception("Full traceback:")
-        return jsonify({
-            'error': f"An error occurred while processing your request: {str(e)}"
-        }), 500
+        error_msg = f"Error in chat endpoint: {str(e)}"
+        print(error_msg)
+        print(f"Error type: {type(e)}")
+        print(f"Error details: {e.__dict__ if hasattr(e, '__dict__') else 'No additional details'}")
+        return jsonify({'error': error_msg}), 500
 
 @app.route('/print_document', methods=['POST'])
 def print_document():
@@ -952,49 +934,6 @@ def get_prompt(prompt_id):
                 'prompt': DEFAULT_PROMPT
             })
         return jsonify({'error': str(e)}), 500
-
-@app.route('/api/models', methods=['GET'])
-def get_models():
-    """Return available models configuration"""
-    try:
-        return jsonify({"models": MODELS.get("models", {})})
-    except Exception as e:
-        app.logger.error(f"Error getting models: {e}")
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/api/models/current', methods=['GET'])
-def get_current_model():
-    """Return the currently selected model"""
-    app.logger.info('Fetching current model')
-    app.logger.debug(f'Current model: {current_model}')
-    return jsonify(current_model)
-
-@app.route('/api/models/select', methods=['POST'])
-def select_model():
-    """Update the currently selected model"""
-    app.logger.info('Selecting new model')
-    data = request.get_json()
-    provider = data.get('provider')
-    version = data.get('model')
-    
-    app.logger.debug(f'Requested provider: {provider}, version: {version}')
-    
-    if not provider or not version:
-        app.logger.warning('Missing provider or model version')
-        return jsonify({'success': False, 'error': 'Provider and model version are required'}), 400
-    
-    if provider not in MODELS['models']:
-        app.logger.warning(f'Invalid provider: {provider}')
-        return jsonify({'success': False, 'error': 'Invalid provider'}), 400
-    
-    if version not in MODELS['models'][provider]['versions']:
-        app.logger.warning(f'Invalid model version: {version} for provider {provider}')
-        return jsonify({'success': False, 'error': 'Invalid model version'}), 400
-    
-    current_model['provider'] = provider
-    current_model['version'] = version
-    app.logger.info(f'Model updated to: {provider}/{version}')
-    return jsonify({'success': True})
 
 if __name__ == '__main__':
     # Only use debug mode when running locally
